@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Loader2, BookOpen, Brain, Users, Award } from "lucide-react"
+import { Loader2, BookOpen, Brain, Users, Award, AlertCircle } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
 
 export default function LoginPage() {
@@ -27,6 +27,8 @@ export default function LoginPage() {
       setIsLoading(false)
     }
   }
+
+  const isDomainError = error.includes("Domain not authorized") || error.includes("unauthorized-domain")
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
@@ -96,9 +98,31 @@ export default function LoginPage() {
             </CardHeader>
             <CardContent className="space-y-6">
               {error && (
-                <Alert variant="destructive">
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
+                <div className="space-y-3">
+                  <Alert variant="destructive">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription>{error}</AlertDescription>
+                  </Alert>
+
+                  {isDomainError && (
+                    <Alert className="border-blue-200 bg-blue-50">
+                      <AlertCircle className="h-4 w-4 text-blue-600" />
+                      <AlertDescription className="text-blue-800">
+                        <strong>Quick Fix:</strong> Go to your{" "}
+                        <a
+                          href="https://console.firebase.google.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline hover:no-underline"
+                        >
+                          Firebase Console
+                        </a>{" "}
+                        → Authentication → Settings → Authorized domains, then add:{" "}
+                        <code className="bg-blue-100 px-1 rounded">{window.location.hostname}</code>
+                      </AlertDescription>
+                    </Alert>
+                  )}
+                </div>
               )}
 
               <Button

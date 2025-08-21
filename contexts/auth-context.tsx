@@ -38,9 +38,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider)
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error signing in with Google:", error)
-      throw error
+
+      if (error.code === "auth/unauthorized-domain") {
+        const currentDomain = window.location.hostname
+        throw new Error(
+          `Domain not authorized: ${currentDomain}. Please add this domain to your Firebase console under Authentication > Settings > Authorized domains.`,
+        )
+      } else if (error.code === "auth/popup-closed-by-user") {
+        throw new Error("Sign-in was cancelled. Please try again.")
+      } else if (error.code === "auth/popup-blocked") {
+        throw new Error("Pop-up was blocked by your browser. Please allow pop-ups and try again.")
+      } else {
+        throw new Error(error.message || "An error occurred during sign-in. Please try again.")
+      }
     }
   }
 
