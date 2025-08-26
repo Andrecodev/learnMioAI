@@ -8,8 +8,10 @@ import { auth, googleProvider } from "@/lib/firebase"
 interface AuthContextType {
   user: User | null
   loading: boolean
+  isProfileCompleted: boolean
   signInWithGoogle: () => Promise<void>
   logout: () => Promise<void>
+  setProfileCompleted: (completed: boolean) => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -25,11 +27,16 @@ export function useAuth() {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const [isProfileCompleted, setIsProfileCompleted] = useState(false)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user)
       setLoading(false)
+      
+      // Check profile completion status from cookie
+      const profileCompleted = document.cookie.includes('profile-completed=true')
+      setIsProfileCompleted(profileCompleted)
     })
 
     return unsubscribe
@@ -65,11 +72,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+  const setProfileCompleted = (completed: boolean) => {
+    setIsProfileCompleted(completed)
+    if (completed) {
+      document.cookie = 'profile-completed=true; path=/'
+    } else {
+      document.cookie = 'profile-completed=false; path=/'
+    }
+  }
+
   const value = {
     user,
     loading,
+    isProfileCompleted,
     signInWithGoogle,
     logout,
+    setProfileCompleted,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
