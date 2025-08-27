@@ -67,7 +67,7 @@ export default function ProfileForm() {
             <div
               key={num}
               className={`w-8 h-8 rounded-full flex items-center justify-center 
-                ${step === num ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                ${step === num ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}
             >
               {num}
             </div>
@@ -76,7 +76,7 @@ export default function ProfileForm() {
       </div>
 
       {error && (
-        <div className="mb-4 p-4 bg-red-100 text-red-700 rounded-md">
+        <div className="mb-4 p-4 bg-destructive/10 text-destructive rounded-md">
           {error}
         </div>
       )}

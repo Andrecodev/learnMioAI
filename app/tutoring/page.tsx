@@ -83,14 +83,14 @@ export default function TutoringPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-white border-b">
+      <div className="bg-card border-b border-border">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Live Tutoring</h1>
-              <p className="text-gray-600 mt-1">Connect with certified English instructors worldwide</p>
+              <h1 className="text-3xl font-bold text-foreground">Live Tutoring</h1>
+              <p className="text-muted-foreground mt-1">Connect with certified English instructors worldwide</p>
             </div>
             <div className="flex items-center gap-4">
               <Badge variant="secondary" className="text-sm">
@@ -183,29 +183,29 @@ export default function TutoringPage() {
                                 <div className="flex items-center gap-1">
                                   <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                                   <span className="font-medium">{tutor.rating}</span>
-                                  <span className="text-gray-500">({tutor.reviews} reviews)</span>
+                                  <span className="text-muted-foreground">({tutor.reviews} reviews)</span>
                                 </div>
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="text-2xl font-bold text-blue-600">${tutor.price}</div>
-                              <div className="text-sm text-gray-500">per hour</div>
+                              <div className="text-2xl font-bold text-primary">${tutor.price}</div>
+                              <div className="text-sm text-muted-foreground">per hour</div>
                             </div>
                           </div>
 
-                          <p className="text-gray-600 mb-3">{tutor.description}</p>
+                          <p className="text-muted-foreground mb-3">{tutor.description}</p>
 
                           <div className="space-y-2 mb-4">
                             <div className="flex items-center gap-2 text-sm">
-                              <Award className="h-4 w-4 text-gray-400" />
+                              <Award className="h-4 w-4 text-muted-foreground" />
                               <span>{tutor.experience} teaching experience</span>
                             </div>
                             <div className="flex items-center gap-2 text-sm">
-                              <Globe className="h-4 w-4 text-gray-400" />
+                              <Globe className="h-4 w-4 text-muted-foreground" />
                               <span>{tutor.languages.join(", ")}</span>
                             </div>
                             <div className="flex items-center gap-2 text-sm">
-                              <Clock className="h-4 w-4 text-gray-400" />
+                              <Clock className="h-4 w-4 text-muted-foreground" />
                               <span
                                 className={
                                   tutor.availability.includes("Available now") ? "text-green-600 font-medium" : ""
@@ -255,13 +255,13 @@ export default function TutoringPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {upcomingSessions.map((session) => (
-                  <div key={session.id} className="p-4 bg-blue-50 rounded-lg space-y-2">
+                  <div key={session.id} className="p-4 bg-secondary/20 rounded-lg space-y-2">
                     <div className="flex items-center justify-between">
-                      <h4 className="font-medium text-sm">{session.subject}</h4>
+                      <h4 className="font-medium text-sm text-foreground">{session.subject}</h4>
                       <Badge variant="secondary">{session.type}</Badge>
                     </div>
-                    <p className="text-sm text-gray-600">with {session.tutor}</p>
-                    <div className="flex items-center justify-between text-xs text-gray-500">
+                    <p className="text-sm text-muted-foreground">with {session.tutor}</p>
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
                       <span>{session.time}</span>
                       <span>{session.duration}</span>
                     </div>
@@ -283,16 +283,16 @@ export default function TutoringPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600">18</div>
-                  <p className="text-sm text-gray-600">Total Sessions</p>
+                  <div className="text-3xl font-bold text-primary">18</div>
+                  <p className="text-sm text-muted-foreground">Total Sessions</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-green-600">24h</div>
-                  <p className="text-sm text-gray-600">Learning Time</p>
+                  <div className="text-3xl font-bold text-primary">24h</div>
+                  <p className="text-sm text-muted-foreground">Learning Time</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-purple-600">5</div>
-                  <p className="text-sm text-gray-600">Favorite Tutors</p>
+                  <div className="text-3xl font-bold text-primary">5</div>
+                  <p className="text-sm text-muted-foreground">Favorite Tutors</p>
                 </div>
               </CardContent>
             </Card>

@@ -22,17 +22,17 @@ export default function DashboardPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-white border-b">
+      <div className="bg-card border-b border-border">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Welcome back, Alex!</h1>
-              <p className="text-gray-600 mt-1">Continue your English learning journey</p>
+              <h1 className="text-3xl font-bold text-foreground">Welcome back, Alex!</h1>
+              <p className="text-muted-foreground mt-1">Continue your English learning journey</p>
             </div>
             <div className="flex items-center gap-4">
-              <Badge variant="secondary" className="text-sm">
+              <Badge variant="secondary" className="text-sm bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300">
                 <Flame className="h-4 w-4 mr-1" />
                 28-day streak
               </Badge>
@@ -55,40 +55,40 @@ export default function DashboardPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5" />
+                  <TrendingUp className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                   Your Progress
                 </CardTitle>
-                <CardDescription>Current level: Intermediate (B2)</CardDescription>
+                <CardDescription className="text-muted-foreground">Current level: Intermediate (B2)</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Overall Progress</span>
-                    <span>75%</span>
+                    <span className="text-foreground">Overall Progress</span>
+                    <span className="text-blue-600 dark:text-blue-400 font-medium">75%</span>
                   </div>
-                  <Progress value={75} className="h-3" />
+                  <Progress value={75} className="h-3 bg-blue-100 dark:bg-blue-950" />
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <BookOpen className="h-6 w-6 text-blue-600 mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-blue-600">156</div>
-                    <div className="text-sm text-gray-600">Lessons Completed</div>
+                  <div className="text-center p-4 bg-blue-100 dark:bg-blue-950/50 rounded-lg">
+                    <BookOpen className="h-6 w-6 text-blue-600 dark:text-blue-400 mx-auto mb-2" />
+                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">156</div>
+                    <div className="text-sm text-muted-foreground">Lessons Completed</div>
                   </div>
-                  <div className="text-center p-4 bg-green-50 rounded-lg">
-                    <Brain className="h-6 w-6 text-green-600 mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-green-600">42</div>
-                    <div className="text-sm text-gray-600">AI Conversations</div>
+                  <div className="text-center p-4 bg-green-100 dark:bg-green-950/50 rounded-lg">
+                    <Brain className="h-6 w-6 text-green-600 dark:text-green-400 mx-auto mb-2" />
+                    <div className="text-2xl font-bold text-green-600 dark:text-green-400">42</div>
+                    <div className="text-sm text-muted-foreground">AI Conversations</div>
                   </div>
-                  <div className="text-center p-4 bg-purple-50 rounded-lg">
-                    <Users className="h-6 w-6 text-purple-600 mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-purple-600">18</div>
-                    <div className="text-sm text-gray-600">Tutor Sessions</div>
+                  <div className="text-center p-4 bg-purple-100 dark:bg-purple-950/50 rounded-lg">
+                    <Users className="h-6 w-6 text-purple-600 dark:text-purple-400 mx-auto mb-2" />
+                    <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">18</div>
+                    <div className="text-sm text-muted-foreground">Tutor Sessions</div>
                   </div>
-                  <div className="text-center p-4 bg-orange-50 rounded-lg">
-                    <Award className="h-6 w-6 text-orange-600 mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-orange-600">12</div>
-                    <div className="text-sm text-gray-600">Achievements</div>
+                  <div className="text-center p-4 bg-orange-100 dark:bg-orange-950/50 rounded-lg">
+                    <Award className="h-6 w-6 text-orange-600 dark:text-orange-400 mx-auto mb-2" />
+                    <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">12</div>
+                    <div className="text-sm text-muted-foreground">Achievements</div>
                   </div>
                 </div>
               </CardContent>
@@ -102,25 +102,27 @@ export default function DashboardPage() {
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-3 gap-4">
-                  <Button asChild className="h-24 flex-col gap-2">
+                  <Button asChild className="h-24 flex-col gap-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700">
                     <Link href="/lessons/ai-tutor">
                       <Brain className="h-6 w-6" />
                       <span>AI Tutor</span>
                       <span className="text-xs opacity-75">Practice conversation</span>
                     </Link>
                   </Button>
-                  <Button asChild variant="outline" className="h-24 flex-col gap-2 bg-transparent">
+                  <Button asChild variant="outline" 
+                    className="h-24 flex-col gap-2 border-green-200 dark:border-green-800 hover:bg-green-50 dark:hover:bg-green-950/50">
                     <Link href="/lessons/interactive">
-                      <Play className="h-6 w-6" />
-                      <span>Interactive Lesson</span>
-                      <span className="text-xs opacity-75">Grammar & Vocabulary</span>
+                      <Play className="h-6 w-6 text-green-600 dark:text-green-400" />
+                      <span className="text-green-600 dark:text-green-400">Interactive Lesson</span>
+                      <span className="text-xs text-green-600/75 dark:text-green-400/75">Grammar & Vocabulary</span>
                     </Link>
                   </Button>
-                  <Button asChild variant="outline" className="h-24 flex-col gap-2 bg-transparent">
+                  <Button asChild variant="outline" 
+                    className="h-24 flex-col gap-2 border-purple-200 dark:border-purple-800 hover:bg-purple-50 dark:hover:bg-purple-950/50">
                     <Link href="/tutoring/book">
-                      <Users className="h-6 w-6" />
-                      <span>Book Tutor</span>
-                      <span className="text-xs opacity-75">Live 1-on-1 session</span>
+                      <Users className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                      <span className="text-purple-600 dark:text-purple-400">Book Tutor</span>
+                      <span className="text-xs text-purple-600/75 dark:text-purple-400/75">Live 1-on-1 session</span>
                     </Link>
                   </Button>
                 </div>
@@ -138,11 +140,11 @@ export default function DashboardPage() {
               <CardContent>
                 <div className="space-y-4">
                   {recentAchievements.map((achievement) => (
-                    <div key={achievement.id} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                    <div key={achievement.id} className="flex items-center gap-4 p-4 bg-card rounded-lg border border-border">
                       <div className="text-2xl">{achievement.icon}</div>
                       <div className="flex-1">
-                        <h4 className="font-semibold">{achievement.title}</h4>
-                        <p className="text-sm text-gray-600">{achievement.description}</p>
+                        <h4 className="font-semibold text-foreground">{achievement.title}</h4>
+                        <p className="text-sm text-muted-foreground">{achievement.description}</p>
                       </div>
                       <Badge variant="secondary">New</Badge>
                     </div>
@@ -169,16 +171,16 @@ export default function DashboardPage() {
                       <div className="flex-1">
                         <h4 className="font-medium text-sm leading-tight">{lesson.title}</h4>
                         <div className="flex items-center gap-2 mt-1">
-                          <Clock className="h-3 w-3 text-gray-500" />
-                          <span className="text-xs text-gray-600">{lesson.time}</span>
+                          <Clock className="h-3 w-3 text-muted-foreground" />
+                          <span className="text-xs text-muted-foreground">{lesson.time}</span>
                         </div>
-                        {lesson.tutor && <p className="text-xs text-gray-500 mt-1">with {lesson.tutor}</p>}
+                        {lesson.tutor && <p className="text-xs text-muted-foreground mt-1">with {lesson.tutor}</p>}
                       </div>
                       <Badge variant={lesson.type === "Live Tutor" ? "default" : "secondary"} className="text-xs">
                         {lesson.type}
                       </Badge>
                     </div>
-                    {lesson.id < upcomingLessons.length && <div className="border-b" />}
+                    {lesson.id < upcomingLessons.length && <div className="border-b border-border" />}
                   </div>
                 ))}
                 <Button asChild variant="outline" className="w-full mt-4 bg-transparent">
@@ -198,24 +200,24 @@ export default function DashboardPage() {
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Complete 5 lessons</span>
-                    <span>4/5</span>
+                    <span className="text-foreground">Complete 5 lessons</span>
+                    <span className="text-green-600 dark:text-green-400 font-medium">4/5</span>
                   </div>
-                  <Progress value={80} className="h-2" />
+                  <Progress value={80} className="h-2 bg-green-100 dark:bg-green-950" />
                 </div>
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Practice speaking 3 times</span>
-                    <span>2/3</span>
+                    <span className="text-foreground">Practice speaking 3 times</span>
+                    <span className="text-blue-600 dark:text-blue-400 font-medium">2/3</span>
                   </div>
-                  <Progress value={67} className="h-2" />
+                  <Progress value={67} className="h-2 bg-blue-100 dark:bg-blue-950" />
                 </div>
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Learn 20 new words</span>
-                    <span>20/20</span>
+                    <span className="text-foreground">Learn 20 new words</span>
+                    <span className="text-purple-600 dark:text-purple-400 font-medium">20/20</span>
                   </div>
-                  <Progress value={100} className="h-2" />
+                  <Progress value={100} className="h-2 bg-purple-100 dark:bg-purple-950" />
                 </div>
               </CardContent>
             </Card>
@@ -226,14 +228,14 @@ export default function DashboardPage() {
                 <CardTitle>Learning Streak</CardTitle>
               </CardHeader>
               <CardContent className="text-center">
-                <div className="text-4xl font-bold text-orange-600 mb-2">28</div>
-                <p className="text-sm text-gray-600 mb-4">Days in a row</p>
+                <div className="text-4xl font-bold text-orange-600 dark:text-orange-400 mb-2">28</div>
+                <p className="text-sm text-muted-foreground mb-4">Days in a row</p>
                 <div className="flex justify-center gap-1">
                   {Array.from({ length: 7 }).map((_, i) => (
-                    <div key={i} className={`w-6 h-6 rounded-full ${i < 6 ? "bg-orange-500" : "bg-orange-200"}`} />
+                    <div key={i} className={`w-6 h-6 rounded-full ${i < 6 ? 'bg-orange-500 dark:bg-orange-500' : 'bg-orange-200 dark:bg-orange-800'}`} />
                   ))}
                 </div>
-                <p className="text-xs text-gray-500 mt-2">Keep it up!</p>
+                <p className="text-xs text-muted-foreground mt-2">Keep it up!</p>
               </CardContent>
             </Card>
           </div>

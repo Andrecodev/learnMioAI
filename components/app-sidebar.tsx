@@ -15,6 +15,7 @@ import {
   ChevronDown,
   LogOut,
 } from "lucide-react"
+import { ThemeToggle } from './theme-toggle'
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -200,16 +201,21 @@ export function AppSidebar() {
                 align="end"
                 sideOffset={4}
               >
-                <DropdownMenuItem>
-                  <User />
-                  Profile Settings
+                <DropdownMenuItem asChild>
+                  <Link href="/profile">
+                    <User className="mr-2 h-4 w-4" />
+                    Profile Settings
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Settings />
+                  <Settings className="mr-2 h-4 w-4" />
                   Preferences
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <LogOut />
+                  <ThemeToggle />
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-red-600 dark:text-red-400">
+                  <LogOut className="mr-2 h-4 w-4" />
                   Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>
