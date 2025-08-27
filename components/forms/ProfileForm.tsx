@@ -34,7 +34,6 @@ export default function ProfileForm() {
     setError(null);
     
     try {
-      // Send data to the API
       const response = await fetch('/api/profile/save', {
         method: 'POST',
         headers: {
@@ -47,10 +46,7 @@ export default function ProfileForm() {
         throw new Error('Failed to save profile');
       }
 
-      // Update profile completion status
       setProfileCompleted(true);
-      
-      // Redirect to dashboard
       router.push('/dashboard');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong');
@@ -60,14 +56,27 @@ export default function ProfileForm() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <div className="animate-in slide-in-from-bottom-4 duration-700">
       <div className="mb-8">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center relative">
+          {/* Progress bar */}
+          <div className="absolute h-1 bg-muted top-4 left-0 right-0 -z-10 rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-primary transition-all duration-500 ease-out"
+              style={{ width: `${((step - 1) / 2) * 100}%` }}
+            />
+          </div>
+          
+          {/* Step indicators */}
           {[1, 2, 3].map((num) => (
             <div
               key={num}
-              className={`w-8 h-8 rounded-full flex items-center justify-center 
-                ${step === num ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}
+              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500
+                ${step === num 
+                  ? 'bg-primary text-primary-foreground scale-110 shadow-lg ring-4 ring-primary/20' 
+                  : num < step 
+                    ? 'bg-primary/80 text-primary-foreground'
+                    : 'bg-muted text-muted-foreground'}`}
             >
               {num}
             </div>
@@ -76,36 +85,44 @@ export default function ProfileForm() {
       </div>
 
       {error && (
-        <div className="mb-4 p-4 bg-destructive/10 text-destructive rounded-md">
+        <div className="mb-4 p-4 bg-destructive/10 text-destructive rounded-lg animate-in slide-in-from-top-2 fade-in duration-300">
           {error}
         </div>
       )}
       
       <form onSubmit={handleSubmit}>
-        {step === 1 && (
-          <StepOne
-            formData={formData}
-            setFormData={setFormData}
-            onNext={nextStep}
-          />
-        )}
-        {step === 2 && (
-          <StepTwo
-            formData={formData}
-            setFormData={setFormData}
-            onNext={nextStep}
-            onPrev={prevStep}
-          />
-        )}
-        {step === 3 && (
-          <StepThree
-            formData={formData}
-            setFormData={setFormData}
-            onPrev={prevStep}
-            onSubmit={handleSubmit}
-            isSubmitting={isSubmitting}
-          />
-        )}
+        <div className="relative min-h-[400px] transition-all duration-500">
+          {step === 1 && (
+            <div className="animate-in slide-in-from-right-1/2 duration-500">
+              <StepOne
+                formData={formData}
+                setFormData={setFormData}
+                onNext={nextStep}
+              />
+            </div>
+          )}
+          {step === 2 && (
+            <div className="animate-in slide-in-from-right-1/2 duration-500">
+              <StepTwo
+                formData={formData}
+                setFormData={setFormData}
+                onNext={nextStep}
+                onPrev={prevStep}
+              />
+            </div>
+          )}
+          {step === 3 && (
+            <div className="animate-in slide-in-from-right-1/2 duration-500">
+              <StepThree
+                formData={formData}
+                setFormData={setFormData}
+                onPrev={prevStep}
+                onSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
+              />
+            </div>
+          )}
+        </div>
       </form>
     </div>
   );
