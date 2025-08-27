@@ -1,3 +1,4 @@
+'use client'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
@@ -5,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { BookOpen, Brain, Users, Award, Calendar, TrendingUp, Play, Clock, Target, Flame } from "lucide-react"
 import Link from "next/link"
+import { LevelTestBanner } from "@/components/LevelTestBanner"
 
 export default function DashboardPage() {
   const upcomingLessons = [
@@ -43,7 +45,9 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
+      <LevelTestBanner />
+
+      <div className="container mx-auto px-4 py-4">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">

@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "LearnMioAI - AI-Powered English Learning Platform",
   description: "Master English with personalized AI tutors, live instructors, and adaptive learning technology.",
-    generator: 'v0.app'
+    generator: 'andrecodev'
 }
 
 export default function RootLayout({
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body className={inter.className}>
         <AuthProvider>{children}</AuthProvider>
       </body>
