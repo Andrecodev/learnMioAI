@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { AuthProvider } from "@/contexts/auth-context"
 import { ThemeProvider } from "@/components/theme-provider"
+import { ReactQueryProvider } from "@/components/react-query-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -29,9 +30,11 @@ export default function RootLayout({
           storageKey="learnmio-theme"
           disableTransitionOnChange
         >
-          <div className="min-h-screen bg-background text-foreground">
-            <AuthProvider>{children}</AuthProvider>
-          </div>
+          <ReactQueryProvider>
+            <div className="min-h-screen bg-background text-foreground">
+              <AuthProvider>{children}</AuthProvider>
+            </div>
+          </ReactQueryProvider>
         </ThemeProvider>
       </body>
     </html>
