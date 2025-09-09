@@ -1,4 +1,8 @@
 {
+  "TabTitles" : {
+    "title": "LearnMioAI - Plataforma de Aprendizaje de Inglés Potenciada por IA",
+    "description": "Domina el Inglés con tutores de IA personalizados, instructores en vivo y tecnología de aprendizaje adaptativo."
+  },
   "nav": {
     "dashboard": "Panel de Control",
     "learning": "Aprendizaje",

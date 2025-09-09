@@ -1,4 +1,8 @@
 {
+  "TabTitles" : {
+    "title": "LearnMioAI - AI-Powered English Learning Platform",
+    "description": "Master English with personalized AI tutors, live instructors, and adaptive learning technology."
+  },
   "nav": {
     "dashboard": "Dashboard",
     "learning": "Learning",

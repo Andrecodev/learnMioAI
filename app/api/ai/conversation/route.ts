@@ -31,10 +31,10 @@ Topic: ${topic}`
       system: systemPrompt,
       messages: messages,
       temperature: 0.7,
-      maxTokens: 300,
+      // maxTokens: 300,
     })
 
-    return result.toDataStreamResponse()
+    // return result?.toDataStreamResponse()
   } catch (error) {
     console.error("AI conversation error:", error)
     return NextResponse.json({ error: "Failed to process conversation" }, { status: 500 })

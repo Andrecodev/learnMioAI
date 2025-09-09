@@ -3,13 +3,31 @@
 import { useAuth } from "@/contexts/auth-context"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { useTranslations } from "next-intl"
+import { AbstractIntlMessages, useTranslations } from "next-intl"
+import { getMessages } from "next-intl/server"
 // import { Button } from "@/components/ui/button"
 // import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 // import { Badge } from "@/components/ui/badge"
 // import { Progress } from "@/components/ui/progress"
 // import { BookOpen, Users, Brain, Award, TrendingUp, Globe } from "lucide-react"
 // import Link from "next/link"
+
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
+  const messages: AbstractIntlMessages = await getMessages({ locale });
+  console.log("first messages", messages)
+  const title = typeof messages.TabTitles === "object" && messages.TabTitles !== null
+    ? (messages.TabTitles as Record<string, any>).title
+    : undefined
+  const description = typeof messages.TabTitles === "object" && messages.TabTitles !== null
+    ? (messages.TabTitles as Record<string, any>).description
+    : undefined
+
+  return {
+    title,
+    description,
+    generator: 'andrecodev'
+  }
+}
 
 export default function HomePage() {
   const { user, loading } = useAuth()
