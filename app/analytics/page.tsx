@@ -20,7 +20,10 @@ import {
 } from "recharts"
 import { TrendingUp, BookOpen, Clock, Award, Brain, Target, Activity } from "lucide-react"
 
+import { useTranslations } from 'next-intl'
+
 export default function AnalyticsPage() {
+  const t = useTranslations('analytics')
   // Sample data for charts
   const weeklyProgress = [
     { day: "Mon", lessons: 3, speaking: 45, reading: 30 },
@@ -60,35 +63,35 @@ export default function AnalyticsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white border-b">
+  <div className="bg-white border-b">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Learning Analytics</h1>
-              <p className="text-gray-600 mt-1">Track your progress and optimize your learning journey</p>
+      <h1 className="text-3xl font-bold text-gray-900">{t('learningAnalytics')}</h1>
+      <p className="text-gray-600 mt-1">{t('trackProgress')}</p>
             </div>
             <div className="flex items-center gap-4">
               <Badge variant="secondary" className="text-sm">
                 <Activity className="h-4 w-4 mr-1" />
-                Real-time Data
+                {t('realTimeData')}
               </Badge>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
+  <div className="container mx-auto px-4 py-8">
         {/* Key Metrics */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Total Study Time</p>
+                  <p className="text-sm font-medium text-gray-600">{t('totalStudyTime')}</p>
                   <p className="text-3xl font-bold text-gray-900">127h</p>
                   <p className="text-sm text-green-600 flex items-center gap-1 mt-1">
                     <TrendingUp className="h-3 w-3" />
-                    +12% this month
+                    {t('thisMonth')}
                   </p>
                 </div>
                 <div className="p-3 bg-blue-100 rounded-full">
@@ -102,11 +105,11 @@ export default function AnalyticsPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Lessons Completed</p>
+                  <p className="text-sm font-medium text-gray-600">{t('lessonsCompleted')}</p>
                   <p className="text-3xl font-bold text-gray-900">156</p>
-                  <p className="text-sm text-green-600 flex items-center gap-1 mt-1">
+                    <p className="text-sm text-green-600 flex items-center gap-1 mt-1">
                     <TrendingUp className="h-3 w-3" />
-                    +8 this week
+                    {t('thisWeek')}
                   </p>
                 </div>
                 <div className="p-3 bg-green-100 rounded-full">
@@ -120,11 +123,11 @@ export default function AnalyticsPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">AI Conversations</p>
+                  <p className="text-sm font-medium text-gray-600">{t('aiConversations')}</p>
                   <p className="text-3xl font-bold text-gray-900">42</p>
-                  <p className="text-sm text-green-600 flex items-center gap-1 mt-1">
+                    <p className="text-sm text-green-600 flex items-center gap-1 mt-1">
                     <TrendingUp className="h-3 w-3" />
-                    +5 this week
+                    {t('thisWeek')}
                   </p>
                 </div>
                 <div className="p-3 bg-purple-100 rounded-full">
@@ -138,7 +141,7 @@ export default function AnalyticsPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Current Level</p>
+                  <p className="text-sm font-medium text-gray-600">{t('currentLevel')}</p>
                   <p className="text-3xl font-bold text-gray-900">B2</p>
                   <p className="text-sm text-blue-600 flex items-center gap-1 mt-1">
                     <Target className="h-3 w-3" />
@@ -154,11 +157,11 @@ export default function AnalyticsPage() {
         </div>
 
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="skills">Skills Progress</TabsTrigger>
-            <TabsTrigger value="activity">Activity</TabsTrigger>
-            <TabsTrigger value="predictions">Predictions</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="overview">{t('overview')}</TabsTrigger>
+            <TabsTrigger value="skills">{t('skillsProgress')}</TabsTrigger>
+            <TabsTrigger value="activity">{t('activity')}</TabsTrigger>
+            <TabsTrigger value="predictions">{t('predictions')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
@@ -166,8 +169,8 @@ export default function AnalyticsPage() {
               {/* Weekly Progress Chart */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Weekly Learning Activity</CardTitle>
-                  <CardDescription>Your daily learning progress this week</CardDescription>
+                  <CardTitle>{t('weeklyLearningActivity')}</CardTitle>
+                  <CardDescription>{t('dailyLearningProgress')}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={300}>
@@ -186,8 +189,8 @@ export default function AnalyticsPage() {
               {/* Learning Time Trend */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Monthly Learning Hours</CardTitle>
-                  <CardDescription>Your learning time trend over the past 6 months</CardDescription>
+                  <CardTitle>{t('monthlyLearningHours')}</CardTitle>
+                  <CardDescription>{t('learningTimeTrend')}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={300}>
@@ -207,8 +210,8 @@ export default function AnalyticsPage() {
             <div className="grid lg:grid-cols-3 gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Activity Breakdown</CardTitle>
-                  <CardDescription>How you spend your learning time</CardDescription>
+                  <CardTitle>{t('activityBreakdown')}</CardTitle>
+                  <CardDescription>{t('howYouSpendTime')}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={250}>
@@ -245,8 +248,8 @@ export default function AnalyticsPage() {
 
               <Card className="lg:col-span-2">
                 <CardHeader>
-                  <CardTitle>Recent Achievements</CardTitle>
-                  <CardDescription>Your latest milestones and accomplishments</CardDescription>
+                  <CardTitle>{t('recentAchievements')}</CardTitle>
+                  <CardDescription>{t('latestMilestones')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center gap-4 p-4 bg-green-50 rounded-lg">
@@ -282,8 +285,8 @@ export default function AnalyticsPage() {
             <div className="grid lg:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Skills Progress Overview</CardTitle>
-                  <CardDescription>Your current level in each English skill</CardDescription>
+                  <CardTitle>{t('skillsProgressOverview')}</CardTitle>
+                  <CardDescription>{t('currentLevelEachSkill')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   {skillProgress.map((skill) => (
@@ -306,8 +309,8 @@ export default function AnalyticsPage() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Skill Development Recommendations</CardTitle>
-                  <CardDescription>AI-powered suggestions to improve your weakest areas</CardDescription>
+                  <CardTitle>{t('skillDevelopmentRecommendations')}</CardTitle>
+                  <CardDescription>{t('aiPoweredSuggestions')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="p-4 bg-red-50 border border-red-200 rounded-lg">

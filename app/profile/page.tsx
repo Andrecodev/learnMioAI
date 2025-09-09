@@ -1,18 +1,19 @@
 import ProfileForm from '@/components/forms/ProfileForm';
 import { SlideInFromBottom, FadeIn } from '@/components/ui/motion';
+import { useTranslations } from 'next-intl';
 
 export default function ProfilePage() {
+  const t = useTranslations('profile');
   return (
     <div className="min-h-screen bg-background py-12">
       <div className="max-w-4xl mx-auto px-4 space-y-8">
         <FadeIn>
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4 text-foreground bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
-              Perfil de Aprendizaje
+              {t('learningProfile')}
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              Antes de comenzar, necesitamos conocer un poco más sobre ti para personalizar tu experiencia de aprendizaje.
-              Este proceso consta de 3 pasos simples que nos ayudarán a adaptar el contenido a tus necesidades.
+              {t('profileIntro')}
             </p>
           </div>
         </FadeIn>

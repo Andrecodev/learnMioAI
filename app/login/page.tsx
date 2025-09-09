@@ -7,12 +7,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Loader2, BookOpen, Brain, Users, Award, AlertCircle } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
+import { useTranslations } from "next-intl"
 
 export default function LoginPage() {
   const [error, setError] = useState<string>("")
   const [isLoading, setIsLoading] = useState(false)
   const { signInWithGoogle } = useAuth()
   const router = useRouter()
+  const t = useTranslations("login")
 
   const handleGoogleSignIn = async () => {
     try {
@@ -22,7 +24,7 @@ export default function LoginPage() {
       router.push("/dashboard")
     } catch (error: any) {
       console.error("Login error:", error)
-      setError(error.message || "Failed to sign in. Please try again.")
+      setError(error.message || t("failedToSignIn") || "Failed to sign in. Please try again.")
     } finally {
       setIsLoading(false)
     }
@@ -40,35 +42,31 @@ export default function LoginPage() {
               <div className="bg-blue-600 rounded-xl p-3">
                 <BookOpen className="h-8 w-8 text-white" />
               </div>
-              <h1 className="text-3xl font-bold text-gray-900">LearnMioAI</h1>
+              <h1 className="text-3xl font-bold text-gray-900">{t("learnMioAI")}</h1>
             </div>
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
-              Master English with
-              <span className="text-blue-600"> AI-Powered Learning</span>
+              {t("masterEnglishAI")}
             </h2>
-            <p className="text-xl text-gray-600 leading-relaxed">
-              Join thousands of learners using personalized AI tutors, live instructors, and adaptive learning
-              technology.
-            </p>
+            <p className="text-xl text-gray-600 leading-relaxed">{t("joinThousands")}</p>
           </div>
 
           {/* Features */}
           <div className="grid grid-cols-2 gap-6">
             <div className="flex items-center gap-3">
               <Brain className="h-6 w-6 text-blue-600" />
-              <span className="text-gray-700 font-medium">AI Tutoring</span>
+              <span className="text-gray-700 font-medium">{t("aiTutoring")}</span>
             </div>
             <div className="flex items-center gap-3">
               <Users className="h-6 w-6 text-green-600" />
-              <span className="text-gray-700 font-medium">Live Instructors</span>
+              <span className="text-gray-700 font-medium">{t("liveInstructors")}</span>
             </div>
             <div className="flex items-center gap-3">
               <Award className="h-6 w-6 text-purple-600" />
-              <span className="text-gray-700 font-medium">CEFR Certified</span>
+              <span className="text-gray-700 font-medium">{t("cefrCertified")}</span>
             </div>
             <div className="flex items-center gap-3">
               <BookOpen className="h-6 w-6 text-orange-600" />
-              <span className="text-gray-700 font-medium">A1 to C2 Levels</span>
+              <span className="text-gray-700 font-medium">{t("a1ToC2Levels")}</span>
             </div>
           </div>
 
@@ -76,15 +74,15 @@ export default function LoginPage() {
           <div className="flex items-center justify-center lg:justify-start gap-8 pt-4">
             <div className="text-center">
               <div className="text-2xl font-bold text-gray-900">500K+</div>
-              <div className="text-sm text-gray-600">Active Learners</div>
+              <div className="text-sm text-gray-600">{t("activeLearners")}</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-gray-900">95%</div>
-              <div className="text-sm text-gray-600">Success Rate</div>
+              <div className="text-sm text-gray-600">{t("successRate")}</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-gray-900">24/7</div>
-              <div className="text-sm text-gray-600">AI Support</div>
+              <div className="text-sm text-gray-600">{t("aiSupport")}</div>
             </div>
           </div>
         </div>
@@ -93,8 +91,8 @@ export default function LoginPage() {
         <div className="flex justify-center">
           <Card className="w-full max-w-md shadow-2xl border-0">
             <CardHeader className="text-center space-y-2">
-              <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
-              <CardDescription className="text-base">Sign in to continue your English learning journey</CardDescription>
+              <CardTitle className="text-2xl font-bold">{t("welcomeBack")}</CardTitle>
+              <CardDescription className="text-base">{t("signInToContinue")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               {error && (
@@ -108,7 +106,8 @@ export default function LoginPage() {
                     <Alert className="border-blue-200 bg-blue-50">
                       <AlertCircle className="h-4 w-4 text-blue-600" />
                       <AlertDescription className="text-blue-800">
-                        <strong>Quick Fix:</strong> Go to your{" "}
+                        <strong>{t("quickFix")}</strong> {t("quickFixHelp")}
+                        <br />
                         <a
                           href="https://console.firebase.google.com"
                           target="_blank"
@@ -117,7 +116,7 @@ export default function LoginPage() {
                         >
                           Firebase Console
                         </a>{" "}
-                        → Authentication → Settings → Authorized domains, then add:{" "}
+                        → Authentication → Settings → Authorized domains, then add: {" "}
                         <code className="bg-blue-100 px-1 rounded">{window.location.hostname}</code>
                       </AlertDescription>
                     </Alert>
@@ -153,17 +152,17 @@ export default function LoginPage() {
                     />
                   </svg>
                 )}
-                {isLoading ? "Signing in..." : "Continue with Google"}
+                {isLoading ? t("signingIn") : t("continueWithGoogle")}
               </Button>
 
               <div className="text-center text-sm text-gray-600">
-                By signing in, you agree to our{" "}
+                {t("bySigningIn")} {" "}
                 <a href="#" className="text-blue-600 hover:underline">
-                  Terms of Service
+                  {t("termsOfService")}
                 </a>{" "}
-                and{" "}
+                {t("and")} {" "}
                 <a href="#" className="text-blue-600 hover:underline">
-                  Privacy Policy
+                  {t("privacyPolicy")}
                 </a>
               </div>
             </CardContent>

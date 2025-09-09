@@ -7,7 +7,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Star, Clock, Globe, Calendar, Video, MessageSquare, Award, Filter, Search } from "lucide-react"
 import Link from "next/link"
 
+import { useTranslations } from 'next-intl'
+
 export default function TutoringPage() {
+  const t = useTranslations('tutoring')
   const tutors = [
     {
       id: 1,
@@ -89,16 +92,16 @@ export default function TutoringPage() {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-foreground">Live Tutoring</h1>
-              <p className="text-muted-foreground mt-1">Connect with certified English instructors worldwide</p>
+              <h1 className="text-3xl font-bold text-foreground">{t('liveTutoring')}</h1>
+              <p className="text-muted-foreground mt-1">{t('connectCertified')}</p>
             </div>
             <div className="flex items-center gap-4">
               <Badge variant="secondary" className="text-sm">
                 <Video className="h-4 w-4 mr-1" />
-                HD Video Sessions
+                {t('hdVideoSessions')}
               </Badge>
               <Button asChild>
-                <Link href="/tutoring/book">Book Session</Link>
+                <Link href="/tutoring/book">{t('bookSession')}</Link>
               </Button>
             </div>
           </div>
@@ -114,45 +117,45 @@ export default function TutoringPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Filter className="h-5 w-5" />
-                  Find Your Perfect Tutor
+                  {t('findPerfectTutor')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-4 gap-4">
                   <div className="relative">
                     <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input placeholder="Search tutors..." className="pl-10" />
+                    <Input placeholder={t('searchTutors')} className="pl-10" />
                   </div>
                   <Select>
                     <SelectTrigger>
-                      <SelectValue placeholder="Specialty" />
+                      <SelectValue placeholder={t('specialty')} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="business">Business English</SelectItem>
-                      <SelectItem value="conversation">Conversation</SelectItem>
-                      <SelectItem value="ielts">IELTS Prep</SelectItem>
-                      <SelectItem value="toefl">TOEFL Prep</SelectItem>
-                      <SelectItem value="academic">Academic Writing</SelectItem>
+                      <SelectItem value="business">{t('businessEnglish')}</SelectItem>
+                      <SelectItem value="conversation">{t('conversation')}</SelectItem>
+                      <SelectItem value="ielts">{t('ieltsPrep')}</SelectItem>
+                      <SelectItem value="toefl">{t('toefPrep')}</SelectItem>
+                      <SelectItem value="academic">{t('academicWriting')}</SelectItem>
                     </SelectContent>
                   </Select>
                   <Select>
                     <SelectTrigger>
-                      <SelectValue placeholder="Availability" />
+                      <SelectValue placeholder={t('availability')} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="now">Available Now</SelectItem>
-                      <SelectItem value="today">Today</SelectItem>
-                      <SelectItem value="week">This Week</SelectItem>
+                      <SelectItem value="now">{t('availableNow')}</SelectItem>
+                      <SelectItem value="today">{t('today')}</SelectItem>
+                      <SelectItem value="week">{t('thisWeek')}</SelectItem>
                     </SelectContent>
                   </Select>
                   <Select>
                     <SelectTrigger>
-                      <SelectValue placeholder="Price Range" />
+                      <SelectValue placeholder={t('priceRange')} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="low">$15-25/hour</SelectItem>
-                      <SelectItem value="mid">$25-35/hour</SelectItem>
-                      <SelectItem value="high">$35+/hour</SelectItem>
+                      <SelectItem value="low">{t('priceLow')}</SelectItem>
+                      <SelectItem value="mid">{t('priceMid')}</SelectItem>
+                      <SelectItem value="high">{t('priceHigh')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -189,7 +192,7 @@ export default function TutoringPage() {
                             </div>
                             <div className="text-right">
                               <div className="text-2xl font-bold text-primary">${tutor.price}</div>
-                              <div className="text-sm text-muted-foreground">per hour</div>
+                              <div className="text-sm text-muted-foreground">{t('perHour')}</div>
                             </div>
                           </div>
 
@@ -198,7 +201,7 @@ export default function TutoringPage() {
                           <div className="space-y-2 mb-4">
                             <div className="flex items-center gap-2 text-sm">
                               <Award className="h-4 w-4 text-muted-foreground" />
-                              <span>{tutor.experience} teaching experience</span>
+                              <span>{tutor.experience} {t('teachingExperience')}</span>
                             </div>
                             <div className="flex items-center gap-2 text-sm">
                               <Globe className="h-4 w-4 text-muted-foreground" />
@@ -226,13 +229,13 @@ export default function TutoringPage() {
 
                           <div className="flex gap-3">
                             <Button asChild className="flex-1">
-                              <Link href={`/tutoring/book/${tutor.id}`}>Book Session</Link>
+                              <Link href={`/tutoring/book/${tutor.id}`}>{t('bookSession')}</Link>
                             </Button>
                             <Button variant="outline">
                               <MessageSquare className="h-4 w-4 mr-2" />
-                              Message
+                              {t('message')}
                             </Button>
-                            <Button variant="outline">View Profile</Button>
+                            <Button variant="outline">{t('viewProfile')}</Button>
                           </div>
                         </div>
                       </div>
@@ -248,9 +251,9 @@ export default function TutoringPage() {
             {/* Upcoming Sessions */}
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2">
                   <Calendar className="h-5 w-5" />
-                  Upcoming Sessions
+                  {t('upcomingSessions')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -260,18 +263,18 @@ export default function TutoringPage() {
                       <h4 className="font-medium text-sm text-foreground">{session.subject}</h4>
                       <Badge variant="secondary">{session.type}</Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground">with {session.tutor}</p>
+                    <p className="text-sm text-muted-foreground">{t('withTutor', { tutor: session.tutor })}</p>
                     <div className="flex items-center justify-between text-xs text-muted-foreground">
                       <span>{session.time}</span>
                       <span>{session.duration}</span>
                     </div>
                     <Button size="sm" className="w-full">
-                      Join Session
+                      {t('joinSession')}
                     </Button>
                   </div>
                 ))}
                 <Button asChild variant="outline" className="w-full bg-transparent">
-                  <Link href="/schedule">View All Sessions</Link>
+                  <Link href="/schedule">{t('viewAllSessions')}</Link>
                 </Button>
               </CardContent>
             </Card>
@@ -282,17 +285,17 @@ export default function TutoringPage() {
                 <CardTitle>Your Tutoring Stats</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="text-center">
+                  <div className="text-center">
                   <div className="text-3xl font-bold text-primary">18</div>
-                  <p className="text-sm text-muted-foreground">Total Sessions</p>
+                  <p className="text-sm text-muted-foreground">{t('totalSessions')}</p>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-primary">24h</div>
-                  <p className="text-sm text-muted-foreground">Learning Time</p>
+                  <p className="text-sm text-muted-foreground">{t('learningTime')}</p>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-primary">5</div>
-                  <p className="text-sm text-muted-foreground">Favorite Tutors</p>
+                  <p className="text-sm text-muted-foreground">{t('favoriteTutors')}</p>
                 </div>
               </CardContent>
             </Card>
@@ -300,17 +303,17 @@ export default function TutoringPage() {
             {/* Help & Support */}
             <Card>
               <CardHeader>
-                <CardTitle>Need Help?</CardTitle>
+                <CardTitle>{t('needHelp')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button variant="outline" className="w-full justify-start text-sm bg-transparent">
-                  📞 Technical Support
+                  📞 {t('technicalSupport')}
                 </Button>
                 <Button variant="outline" className="w-full justify-start text-sm bg-transparent">
-                  💬 Chat with Support
+                  💬 {t('chatWithSupport')}
                 </Button>
                 <Button variant="outline" className="w-full justify-start text-sm bg-transparent">
-                  📚 Tutoring Guidelines
+                  📚 {t('tutoringGuidelines')}
                 </Button>
               </CardContent>
             </Card>

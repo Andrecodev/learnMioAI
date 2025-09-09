@@ -2,9 +2,11 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Target, X } from "lucide-react"
 import { useState } from "react"
+import { useTranslations } from 'next-intl'
 
 export function LevelTestBanner() {
   const [isVisible, setIsVisible] = useState(true)
+  const t = useTranslations('home')
 
   if (!isVisible) return null
 
@@ -14,7 +16,7 @@ export function LevelTestBanner() {
         <button
           onClick={() => setIsVisible(false)}
           className="absolute right-2 top-2 p-1.5 rounded-full hover:bg-primary/10 transition-colors"
-          aria-label="Close banner"
+          aria-label={t('close')}
         >
           <X className="h-4 w-4 text-muted-foreground" />
         </button>
@@ -24,15 +26,15 @@ export function LevelTestBanner() {
               <Target className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-foreground mb-2 sm:mb-1">Want to know your exact English level?</h3>
-              <p className="text-muted-foreground text-sm sm:text-base">Take our comprehensive English test to get a detailed assessment of your skills</p>
+              <h3 className="text-lg font-semibold text-foreground mb-2 sm:mb-1">{t('wantToKnowLevel')}</h3>
+              <p className="text-muted-foreground text-sm sm:text-base">{t('takeComprehensiveTest')}</p>
             </div>
           </div>
           <Button
             onClick={() => window.open('https://www.efset.org/4-skill/launch/', '_blank')}
             className="w-full sm:w-auto mt-4 sm:mt-0 whitespace-nowrap shrink-0 cursor-pointer"
           >
-            Take the Test
+            {t('takeTheTest')}
           </Button>
         </CardContent>
       </Card>
