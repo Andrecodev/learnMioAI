@@ -12,22 +12,22 @@ import { getMessages } from "next-intl/server"
 // import { BookOpen, Users, Brain, Award, TrendingUp, Globe } from "lucide-react"
 // import Link from "next/link"
 
-export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
-  const messages: AbstractIntlMessages = await getMessages({ locale });
-  console.log("first messages", messages)
-  const title = typeof messages.TabTitles === "object" && messages.TabTitles !== null
-    ? (messages.TabTitles as Record<string, any>).title
-    : undefined
-  const description = typeof messages.TabTitles === "object" && messages.TabTitles !== null
-    ? (messages.TabTitles as Record<string, any>).description
-    : undefined
+// export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
+//   const messages: AbstractIntlMessages = await getMessages({ locale });
+//   console.log("first messages", messages)
+//   const title = typeof messages.TabTitles === "object" && messages.TabTitles !== null
+//     ? (messages.TabTitles as Record<string, any>).title
+//     : undefined
+//   const description = typeof messages.TabTitles === "object" && messages.TabTitles !== null
+//     ? (messages.TabTitles as Record<string, any>).description
+//     : undefined
 
-  return {
-    title,
-    description,
-    generator: 'andrecodev'
-  }
-}
+//   return {
+//     title,
+//     description,
+//     generator: 'andrecodev'
+//   }
+// }
 
 export default function HomePage() {
   const { user, loading } = useAuth()
