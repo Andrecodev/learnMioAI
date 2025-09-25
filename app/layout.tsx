@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { ReactQueryProvider } from "@/components/react-query-provider"
 import { NextIntlClientProvider } from "next-intl"
 import { getLocale, getMessages } from "next-intl/server"
+import { Footer } from "@/components/footer"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -38,8 +39,11 @@ export default async function RootLayout({
         >
           <NextIntlClientProvider messages={messages}>
           <ReactQueryProvider>
-            <div className="min-h-screen bg-background text-foreground">
-              <AuthProvider>{children}</AuthProvider>
+            <div className="min-h-screen bg-background text-foreground flex flex-col">
+              <div className="flex-1">
+                <AuthProvider>{children}</AuthProvider>
+              </div>
+              <Footer />
             </div>
           </ReactQueryProvider>
           </NextIntlClientProvider>
