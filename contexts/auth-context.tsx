@@ -46,10 +46,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(user)
       setLoading(false)
       
-      // Check profile completion status from cookie
-      const profileCompleted = document.cookie.includes('profile-completed=true')
-      console.log("🍪 AuthProvider: Profile completed from cookie:", profileCompleted)
-      setIsProfileCompleted(profileCompleted)
+      if (user) {
+        // When user signs in with Google, automatically mark profile as completed
+        // to skip the profile form and go directly to dashboard
+        console.log("✅ AuthProvider: User authenticated, auto-completing profile")
+        setIsProfileCompleted(true)
+        document.cookie = 'profile-completed=true; path=/; max-age=31536000' // 1 year
+        console.log("🍪 AuthProvider: Profile auto-completed, cookie set to true")
+      } else {
+        // Reset profile completion when user signs out
+        const profileCompleted = document.cookie.includes('profile-completed=true')
+        console.log("🍪 AuthProvider: Profile completed from cookie:", profileCompleted)
+        setIsProfileCompleted(profileCompleted)
+      }
 
       // DON'T redirect here - let the components handle navigation
       // This was causing the infinite reload loop
@@ -86,9 +95,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
+      console.log("🚪 AuthProvider: Starting logout process")
       await signOut(auth)
+      
+      // Clear profile completed cookie
+      document.cookie = 'profile-completed=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+      setIsProfileCompleted(false)
+      
+      console.log("✅ AuthProvider: Logout successful, cookies cleared")
     } catch (error) {
-      console.error("Error signing out:", error)
+      console.error("❌ AuthProvider: Error signing out:", error)
       throw error
     }
   }

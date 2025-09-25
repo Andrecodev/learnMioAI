@@ -21,19 +21,8 @@ export default function LoginPage() {
     console.log("🔍 LoginPage: Auth state check", { user, loading, pathname: window.location.pathname })
     
     if (!loading && user) {
-      console.log("✅ LoginPage: User authenticated, checking profile completion")
-      
-      // Check if profile is completed
-      const profileCompleted = document.cookie.includes('profile-completed=true')
-      console.log("🍪 LoginPage: Profile completed:", profileCompleted)
-
-      if (profileCompleted) {
-        console.log("➡️ LoginPage: Redirecting to dashboard")
-        router.push("/dashboard")
-      } else {
-        console.log("➡️ LoginPage: Redirecting to profile")
-        router.push("/profile")
-      }
+      console.log("✅ LoginPage: User authenticated, redirecting directly to dashboard")
+      router.push("/dashboard")
     }
   }, [user, loading, router])
 
