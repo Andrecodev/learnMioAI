@@ -34,12 +34,14 @@ export default function HomePage() {
   const router = useRouter()
 
   useEffect(() => {
+    console.log("🏠 HomePage: Auth state check", { user, loading })
+    
     if (!loading) {
       if (user) {
-        // If user is authenticated, redirect to dashboard
+        console.log("✅ HomePage: User authenticated, redirecting directly to dashboard")
         router.push("/dashboard")
       } else {
-        // If user is not authenticated, redirect to login
+        console.log("➡️ HomePage: No user, redirecting to login")
         router.push("/login")
       }
     }

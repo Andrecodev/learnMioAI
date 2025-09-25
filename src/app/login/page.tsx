@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -12,26 +12,31 @@ import { useTranslations } from "next-intl"
 export default function LoginPage() {
   const [error, setError] = useState<string>("")
   const [isLoading, setIsLoading] = useState(false)
-  const { signInWithGoogle } = useAuth()
+  const { signInWithGoogle, user, loading } = useAuth()
   const router = useRouter()
   const t = useTranslations("login")
 
+  // Handle redirection after successful authentication
+  useEffect(() => {
+    console.log("🔍 LoginPage: Auth state check", { user, loading, pathname: window.location.pathname })
+    
+    if (!loading && user) {
+      console.log("✅ LoginPage: User authenticated, redirecting directly to dashboard")
+      router.push("/dashboard")
+    }
+  }, [user, loading, router])
+
   const handleGoogleSignIn = async () => {
     try {
+      console.log("🔄 LoginPage: Starting sign-in process")
       setError("")
       setIsLoading(true)
       await signInWithGoogle()
-
-      // Check if profile is completed
-      const profileCompleted = document.cookie.includes('profile-completed=true')
-
-      if (profileCompleted) {
-        router.push("/dashboard")
-      } else {
-        router.push("/profile")
-      }
+      console.log("✅ LoginPage: Sign-in completed, auth state will trigger redirect")
+      
+      // Don't manually redirect here - let useEffect handle it
     } catch (error: any) {
-      console.error("Login error:", error)
+      console.error("❌ LoginPage: Sign-in error:", error)
       setError(error.message || t("failedToSignIn") || "Failed to sign in. Please try again.")
     } finally {
       setIsLoading(false)
@@ -41,7 +46,7 @@ export default function LoginPage() {
   const isDomainError = error.includes("Domain not authorized") || error.includes("unauthorized-domain")
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
+    <div className="min-h-[80vh] bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4 py-8">
       <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-12 items-center">
         {/* Left side - Branding */}
         <div className="space-y-8 text-center lg:text-left">

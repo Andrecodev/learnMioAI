@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Card } from "@/components/ui/card"
 import { BookOpen } from "lucide-react"
 
@@ -27,7 +28,16 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="text-sm text-white hover:text-blue-100 transition-colors block"
               >
-                <div className="font-medium mb-1">Desarrollado en colaboración con</div>
+                <div className="flex items-center justify-center gap-3 mb-1">
+                  <Image
+                    src="/IngNavs.png"
+                    alt="IngNavs Logo"
+                    width={24}
+                    height={24}
+                    className="rounded-full"
+                  />
+                  <div className="font-medium">Desarrollado en colaboración con</div>
+                </div>
                 <div className="font-bold text-blue-200 group-hover:text-white transition-colors">
                   IngNavs
                 </div>

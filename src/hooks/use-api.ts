@@ -1,7 +1,7 @@
 // TanStack Query hooks for API operations
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
-import { ProfileFormData } from '@/src/types/forms';
+import { ProfileFormData } from '@/types/forms';
 
 // Query keys for caching
 export const queryKeys = {
