@@ -43,6 +43,8 @@ export default function ProfileForm() {
     setError(null);
     
     try {
+      console.log("📝 ProfileForm: Submitting profile data", formData);
+      
       // Use external API through TanStack Query
       if (user?.uid) {
         await batchSaveMutation.mutateAsync({
@@ -62,9 +64,13 @@ export default function ProfileForm() {
         }
       }
 
+      console.log("✅ ProfileForm: Profile saved successfully, setting cookie");
       setProfileCompleted(true);
+      
+      console.log("➡️ ProfileForm: Redirecting to dashboard");
       router.push('/dashboard');
     } catch (err) {
+      console.error("❌ ProfileForm: Error saving profile:", err);
       setError(err instanceof Error ? err.message : 'Something went wrong');
     } finally {
       setIsSubmitting(false);

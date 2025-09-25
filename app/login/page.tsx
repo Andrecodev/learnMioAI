@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -12,26 +12,42 @@ import { useTranslations } from "next-intl"
 export default function LoginPage() {
   const [error, setError] = useState<string>("")
   const [isLoading, setIsLoading] = useState(false)
-  const { signInWithGoogle } = useAuth()
+  const { signInWithGoogle, user, loading } = useAuth()
   const router = useRouter()
   const t = useTranslations("login")
 
-  const handleGoogleSignIn = async () => {
-    try {
-      setError("")
-      setIsLoading(true)
-      await signInWithGoogle()
+  // Handle redirection after successful authentication
+  useEffect(() => {
+    console.log("🔍 LoginPage: Auth state check", { user, loading, pathname: window.location.pathname })
+    
+    if (!loading && user) {
+      console.log("✅ LoginPage: User authenticated, checking profile completion")
       
       // Check if profile is completed
       const profileCompleted = document.cookie.includes('profile-completed=true')
+      console.log("🍪 LoginPage: Profile completed:", profileCompleted)
 
       if (profileCompleted) {
+        console.log("➡️ LoginPage: Redirecting to dashboard")
         router.push("/dashboard")
       } else {
+        console.log("➡️ LoginPage: Redirecting to profile")
         router.push("/profile")
       }
+    }
+  }, [user, loading, router])
+
+  const handleGoogleSignIn = async () => {
+    try {
+      console.log("🔄 LoginPage: Starting sign-in process")
+      setError("")
+      setIsLoading(true)
+      await signInWithGoogle()
+      console.log("✅ LoginPage: Sign-in completed, auth state will trigger redirect")
+      
+      // Don't manually redirect here - let useEffect handle it
     } catch (error: any) {
-      console.error("Login error:", error)
+      console.error("❌ LoginPage: Sign-in error:", error)
       setError(error.message || t("failedToSignIn") || "Failed to sign in. Please try again.")
     } finally {
       setIsLoading(false)

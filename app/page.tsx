@@ -34,12 +34,24 @@ export default function HomePage() {
   const router = useRouter()
 
   useEffect(() => {
+    console.log("🏠 HomePage: Auth state check", { user, loading })
+    
     if (!loading) {
       if (user) {
-        // If user is authenticated, redirect to dashboard
-        router.push("/dashboard")
+        console.log("✅ HomePage: User authenticated, checking profile completion")
+        // Check profile completion
+        const profileCompleted = document.cookie.includes('profile-completed=true')
+        console.log("🍪 HomePage: Profile completed:", profileCompleted)
+        
+        if (profileCompleted) {
+          console.log("➡️ HomePage: Redirecting to dashboard")
+          router.push("/dashboard")
+        } else {
+          console.log("➡️ HomePage: Redirecting to profile")
+          router.push("/profile")
+        }
       } else {
-        // If user is not authenticated, redirect to login
+        console.log("➡️ HomePage: No user, redirecting to login")
         router.push("/login")
       }
     }
