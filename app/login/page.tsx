@@ -21,7 +21,15 @@ export default function LoginPage() {
       setError("")
       setIsLoading(true)
       await signInWithGoogle()
-      router.push("/dashboard")
+
+      // Check if profile is completed
+      const profileCompleted = document.cookie.includes('profile-completed=true')
+
+      if (profileCompleted) {
+        router.push("/dashboard")
+      } else {
+        router.push("/profile")
+      }
     } catch (error: any) {
       console.error("Login error:", error)
       setError(error.message || t("failedToSignIn") || "Failed to sign in. Please try again.")
