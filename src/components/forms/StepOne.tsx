@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ProfileFormData } from '../../types/forms';
+import { ProfileFormData } from '../../src/types/forms';
 
 interface StepOneProps {
   formData: ProfileFormData;

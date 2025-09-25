@@ -36,11 +36,11 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarRail,
-} from "@/src/types/components/ui/sidebar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/src/types/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/src/types/components/ui/avatar"
-import { Badge } from "@/src/types/components/ui/badge"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/src/types/components/ui/collapsible"
+} from "@/components/ui/sidebar"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 
 const menuItems = [
   {

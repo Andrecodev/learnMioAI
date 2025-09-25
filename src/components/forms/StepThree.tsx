@@ -1,6 +1,6 @@
 'use client';
 
-import { ProfileFormData } from '../../types/forms';
+import { ProfileFormData } from '../../src/types/forms';
 
 interface StepThreeProps {
   formData: ProfileFormData;

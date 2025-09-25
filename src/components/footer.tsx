@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Card } from "@/src/types/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { BookOpen } from "lucide-react"
 
 export function Footer() {
