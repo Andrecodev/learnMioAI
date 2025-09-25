@@ -1,5 +1,5 @@
-import { Card, CardContent } from "@/src/types/components/ui/card"
-import { Button } from "@/src/types/components/ui/button"
+import { Card, CardContent } from "@/src/components/ui/card"
+import { Button } from "@/src/components/ui/button"
 import { Target, X } from "lucide-react"
 import { useState } from "react"
 import { useTranslations } from 'next-intl'

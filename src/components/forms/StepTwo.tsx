@@ -1,6 +1,6 @@
 'use client';
 
-import { ProfileFormData } from '../../forms';
+import { ProfileFormData } from '../../types/forms';
 
 interface StepTwoProps {
   formData: ProfileFormData;
