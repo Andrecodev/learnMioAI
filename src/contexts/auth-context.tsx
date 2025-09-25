@@ -8,7 +8,7 @@ import {
   signInWithPopup,
   signOut 
 } from "firebase/auth"
-import { auth, googleProvider } from "@/src/lib/firebase"
+import { auth, googleProvider } from "@/lib/firebase"
 
 interface AuthContextType {
   user: User | null
