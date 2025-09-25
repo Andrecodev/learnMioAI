@@ -2,7 +2,13 @@
 
 import type React from "react"
 import { createContext, useContext, useEffect, useState } from "react"
-import { type User, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth"
+import { 
+  type User, 
+  onAuthStateChanged, 
+  signInWithRedirect, 
+  getRedirectResult,
+  signOut 
+} from "firebase/auth"
 import { auth, googleProvider } from "@/lib/firebase"
 
 interface AuthContextType {
@@ -30,6 +36,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isProfileCompleted, setIsProfileCompleted] = useState(false)
 
   useEffect(() => {
+    // Handle redirect result on page load
+    const handleRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth)
+        if (result) {
+          // User successfully signed in via redirect
+          console.log("User signed in via redirect:", result.user)
+        }
+      } catch (error) {
+        console.error("Error handling redirect result:", error)
+      }
+    }
+
+    handleRedirectResult()
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user)
       setLoading(false)
@@ -37,6 +58,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Check profile completion status from cookie
       const profileCompleted = document.cookie.includes('profile-completed=true')
       setIsProfileCompleted(profileCompleted)
+
+      // Handle redirect after successful authentication
+      if (user && window.location.pathname === '/login') {
+        // Redirect to appropriate page based on profile completion
+        if (profileCompleted) {
+          window.location.href = '/dashboard'
+        } else {
+          window.location.href = '/profile'
+        }
+      }
     })
 
     return unsubscribe
@@ -44,7 +75,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider)
+      await signInWithRedirect(auth, googleProvider)
     } catch (error: any) {
       console.error("Error signing in with Google:", error)
 
@@ -53,10 +84,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         throw new Error(
           `Domain not authorized: ${currentDomain}. Please add this domain to your Firebase console under Authentication > Settings > Authorized domains.`,
         )
-      } else if (error.code === "auth/popup-closed-by-user") {
+      } else if (error.code === "auth/redirect-cancelled-by-user") {
         throw new Error("Sign-in was cancelled. Please try again.")
-      } else if (error.code === "auth/popup-blocked") {
-        throw new Error("Pop-up was blocked by your browser. Please allow pop-ups and try again.")
+      } else if (error.code === "auth/redirect-operation-pending") {
+        throw new Error("A redirect sign-in is already pending. Please wait.")
       } else {
         throw new Error(error.message || "An error occurred during sign-in. Please try again.")
       }

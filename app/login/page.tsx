@@ -20,20 +20,13 @@ export default function LoginPage() {
     try {
       setError("")
       setIsLoading(true)
+      
+      // Note: signInWithRedirect will navigate away from this page
+      // The auth state will be handled when the user returns
       await signInWithGoogle()
-
-      // Check if profile is completed
-      const profileCompleted = document.cookie.includes('profile-completed=true')
-
-      if (profileCompleted) {
-        router.push("/dashboard")
-      } else {
-        router.push("/profile")
-      }
     } catch (error: any) {
       console.error("Login error:", error)
       setError(error.message || t("failedToSignIn") || "Failed to sign in. Please try again.")
-    } finally {
       setIsLoading(false)
     }
   }
