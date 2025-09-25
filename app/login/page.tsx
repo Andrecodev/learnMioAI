@@ -21,7 +21,7 @@ export default function LoginPage() {
       setError("")
       setIsLoading(true)
       await signInWithGoogle()
-
+      
       // Check if profile is completed
       const profileCompleted = document.cookie.includes('profile-completed=true')
 
@@ -41,7 +41,7 @@ export default function LoginPage() {
   const isDomainError = error.includes("Domain not authorized") || error.includes("unauthorized-domain")
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
+    <div className="min-h-[80vh] bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4 py-8">
       <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-12 items-center">
         {/* Left side - Branding */}
         <div className="space-y-8 text-center lg:text-left">

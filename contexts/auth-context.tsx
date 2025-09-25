@@ -2,7 +2,12 @@
 
 import type React from "react"
 import { createContext, useContext, useEffect, useState } from "react"
-import { type User, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth"
+import { 
+  type User, 
+  onAuthStateChanged, 
+  signInWithPopup,
+  signOut 
+} from "firebase/auth"
 import { auth, googleProvider } from "@/lib/firebase"
 
 interface AuthContextType {
@@ -37,6 +42,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Check profile completion status from cookie
       const profileCompleted = document.cookie.includes('profile-completed=true')
       setIsProfileCompleted(profileCompleted)
+
+      // Handle redirect after successful authentication
+      if (user && window.location.pathname === '/login') {
+        // Redirect to appropriate page based on profile completion
+        if (profileCompleted) {
+          window.location.href = '/dashboard'
+        } else {
+          window.location.href = '/profile'
+        }
+      }
     })
 
     return unsubscribe
