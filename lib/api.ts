@@ -2,28 +2,39 @@
 import { ProfileFormData } from '@/src/types/forms';
 
 export const api = {
-  // Base configuration
+  // Base configuration for local Next.js API routes
   baseURL: process.env.NEXT_PUBLIC_API_URL || '',
   
-  // Headers for external API calls
+  // Headers for API calls
   getHeaders: () => ({
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN || ''}`,
+    // Only add auth header if we have a token and it's an external API
+    ...(process.env.NEXT_PUBLIC_API_TOKEN && api.baseURL ? 
+      { 'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}` } : {}
+    ),
   }),
 
   // Profile related endpoints
   profile: {
-    // Save profile to external service
+    // Save profile to local Next.js API route
     save: async (data: ProfileFormData) => {
-      const response = await fetch(`${api.baseURL}/api/profiles`, {
+      const url = api.baseURL ? `${api.baseURL}/api/profiles` : '/api/profile/save';
+      const response = await fetch(url, {
         method: 'POST',
         headers: api.getHeaders(),
         body: JSON.stringify(data),
       });
       
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to save profile');
+        let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorData.error || errorMessage;
+        } catch {
+          // If response is not JSON (like HTML 404 page), use default message
+          errorMessage = `Failed to save profile (${response.status})`;
+        }
+        throw new Error(errorMessage);
       }
       
       return response.json();

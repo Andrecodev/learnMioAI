@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useTranslations } from 'next-intl'
+import { useAuth } from '@/contexts/auth-context'
 import {
   Home,
   BookOpen,
@@ -95,9 +96,20 @@ export function AppSidebar() {
   const [openItems, setOpenItems] = useState<string[]>(["learning"])
   const tNav = useTranslations('nav')
   const t = useTranslations('sidebar')
+  const { logout, user } = useAuth()
 
   const toggleItem = (key: string) => {
     setOpenItems((prev) => (prev.includes(key) ? prev.filter((item) => item !== key) : [...prev, key]))
+  }
+
+  const handleLogout = async () => {
+    try {
+      console.log("🚪 AppSidebar: Logging out user")
+      await logout()
+      console.log("✅ AppSidebar: Logout successful")
+    } catch (error) {
+      console.error("❌ AppSidebar: Logout failed:", error)
+    }
   }
 
   return (
@@ -217,7 +229,10 @@ export function AppSidebar() {
                 <DropdownMenuItem>
                   <ThemeToggle />
                 </DropdownMenuItem>
-                <DropdownMenuItem className="text-red-600 dark:text-red-400">
+                <DropdownMenuItem 
+                  className="text-red-600 dark:text-red-400 cursor-pointer"
+                  onClick={handleLogout}
+                >
                   <LogOut className="mr-2 h-4 w-4" />
                   {tNav('logout')}
                 </DropdownMenuItem>

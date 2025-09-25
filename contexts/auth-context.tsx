@@ -35,23 +35,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isProfileCompleted, setIsProfileCompleted] = useState(false)
 
   useEffect(() => {
+    console.log("🔄 AuthProvider: Setting up auth state listener")
+    
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log("👤 AuthProvider: Auth state changed", {
+        user: user ? { uid: user.uid, email: user.email } : null,
+        pathname: window.location.pathname
+      })
+      
       setUser(user)
       setLoading(false)
       
-      // Check profile completion status from cookie
-      const profileCompleted = document.cookie.includes('profile-completed=true')
-      setIsProfileCompleted(profileCompleted)
-
-      // Handle redirect after successful authentication
-      if (user && window.location.pathname === '/login') {
-        // Redirect to appropriate page based on profile completion
-        if (profileCompleted) {
-          window.location.href = '/dashboard'
-        } else {
-          window.location.href = '/profile'
-        }
+      if (user) {
+        // When user signs in with Google, automatically mark profile as completed
+        // to skip the profile form and go directly to dashboard
+        console.log("✅ AuthProvider: User authenticated, auto-completing profile")
+        setIsProfileCompleted(true)
+        document.cookie = 'profile-completed=true; path=/; max-age=31536000' // 1 year
+        console.log("🍪 AuthProvider: Profile auto-completed, cookie set to true")
+      } else {
+        // Reset profile completion when user signs out
+        const profileCompleted = document.cookie.includes('profile-completed=true')
+        console.log("🍪 AuthProvider: Profile completed from cookie:", profileCompleted)
+        setIsProfileCompleted(profileCompleted)
       }
+
+      // DON'T redirect here - let the components handle navigation
+      // This was causing the infinite reload loop
     })
 
     return unsubscribe
@@ -59,9 +69,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider)
+      console.log("🚀 AuthProvider: Starting Google sign-in")
+      const result = await signInWithPopup(auth, googleProvider)
+      console.log("✅ AuthProvider: Google sign-in successful", {
+        uid: result.user.uid,
+        email: result.user.email
+      })
     } catch (error: any) {
-      console.error("Error signing in with Google:", error)
+      console.error("❌ AuthProvider: Error signing in with Google:", error)
 
       if (error.code === "auth/unauthorized-domain") {
         const currentDomain = window.location.hostname
@@ -80,20 +95,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
+      console.log("🚪 AuthProvider: Starting logout process")
       await signOut(auth)
+      
+      // Clear profile completed cookie
+      document.cookie = 'profile-completed=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+      setIsProfileCompleted(false)
+      
+      console.log("✅ AuthProvider: Logout successful, cookies cleared")
     } catch (error) {
-      console.error("Error signing out:", error)
+      console.error("❌ AuthProvider: Error signing out:", error)
       throw error
     }
   }
 
   const setProfileCompleted = (completed: boolean) => {
+    console.log("🍪 AuthProvider: Setting profile completed:", completed)
     setIsProfileCompleted(completed)
+    
     if (completed) {
-      document.cookie = 'profile-completed=true; path=/'
+      document.cookie = 'profile-completed=true; path=/; max-age=31536000' // 1 year
+      console.log("✅ AuthProvider: Cookie set to true")
     } else {
-      document.cookie = 'profile-completed=false; path=/'
+      document.cookie = 'profile-completed=false; path=/; max-age=31536000'
+      console.log("❌ AuthProvider: Cookie set to false")
     }
+    
+    // Verify cookie was set
+    const cookieValue = document.cookie.includes('profile-completed=true')
+    console.log("🔍 AuthProvider: Cookie verification:", cookieValue)
   }
 
   const value = {
