@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
   },
   // Configure domains for images if needed
   images: {
-    domains: ['localhost', '127.0.0.1', '169.254.7.236', '169.254.7.236'],
+    domains: ['localhost', '127.0.0.1', '169.254.7.236'],
   },
   // Add headers for better Firebase integration
   async headers() {
