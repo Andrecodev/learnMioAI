@@ -21,19 +21,21 @@ interface Message {
   }
 }
 
+import { useTranslations } from 'next-intl'
+
 export default function AITutorPage() {
+  const t = useTranslations('aiTutor')
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      content:
-        "Hello! I'm your AI English tutor. I'm here to help you practice conversation, grammar, and pronunciation. What would you like to work on today?",
+  content: t('helloAITutor'),
       sender: "ai",
       timestamp: new Date(),
     },
   ])
   const [inputMessage, setInputMessage] = useState("")
   const [isRecording, setIsRecording] = useState(false)
-  const [currentTopic, setCurrentTopic] = useState("General Conversation")
+  const [currentTopic, setCurrentTopic] = useState("generalConversation")
   const [sessionTime, setSessionTime] = useState(0)
 
   const handleSendMessage = () => {
@@ -49,14 +51,13 @@ export default function AITutorPage() {
     // Simulate AI response with feedback
     const aiResponse: Message = {
       id: messages.length + 2,
-      content:
-        "That's a great question! Let me help you with that. Your sentence structure is good, but I noticed a small grammar point we can improve.",
+      content: t('greatQuestion'),
       sender: "ai",
       timestamp: new Date(),
       feedback: {
-        grammar: ["Consider using 'have been' instead of 'was' for ongoing actions"],
-        pronunciation: ["The 'th' sound in 'think' could be clearer"],
-        suggestions: ["Try: 'I have been thinking about this topic lately'"],
+        grammar: [t('considerUsing')],
+        pronunciation: [t('thSoundClearer')],
+        suggestions: [t('tryExample')],
       },
     }
 
@@ -65,37 +66,36 @@ export default function AITutorPage() {
   }
 
   const conversationTopics = [
-    "General Conversation",
-    "Business English",
-    "Travel & Tourism",
-    "Academic Discussion",
-    "Job Interview Practice",
-    "Daily Life Situations",
+    'generalConversation',
+    'businessEnglish',
+    'travelTourism',
+    'academicDiscussion',
+    'jobInterviewPractice',
+    'dailyLifeSituations',
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-white border-b">
+      <div className="bg-card border-b border-border">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <Brain className="h-6 w-6 text-blue-600" />
-                <h1 className="text-2xl font-bold">AI Tutor Session</h1>
-              </div>
-              <Badge variant="secondary">{currentTopic}</Badge>
+              <Brain className="h-6 w-6 text-primary" />
+              <h1 className="text-2xl font-bold text-foreground">{t('aiTutorSession')}</h1>
+              <Badge variant="secondary">{t(currentTopic)}</Badge>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-sm text-gray-600">
+
+        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Clock className="h-4 w-4" />
                 <span>
-                  {Math.floor(sessionTime / 60)}:{(sessionTime % 60).toString().padStart(2, "0")}
+          {Math.floor(sessionTime / 60)}:{(sessionTime % 60).toString().padStart(2, '0')}
                 </span>
               </div>
               <Button variant="outline" size="sm">
                 <RotateCcw className="h-4 w-4 mr-2" />
-                New Topic
+                {t('newTopic')}
               </Button>
             </div>
           </div>
@@ -114,12 +114,12 @@ export default function AITutorPage() {
                     <AvatarFallback>AI</AvatarFallback>
                   </Avatar>
                   <div>
-                    <CardTitle className="text-lg">Emma - AI Tutor</CardTitle>
-                    <p className="text-sm text-gray-600">Specialized in conversational English</p>
+                    <CardTitle className="text-lg text-foreground">{t('emmaAITutor')}</CardTitle>
+                    <p className="text-sm text-muted-foreground">{t('specializedConversational')}</p>
                   </div>
                   <div className="ml-auto">
-                    <Badge variant="secondary" className="bg-green-100 text-green-800">
-                      Online
+                    <Badge variant="secondary" className="bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">
+                      {t('online')}
                     </Badge>
                   </div>
                 </div>
@@ -137,19 +137,19 @@ export default function AITutorPage() {
                         <div className={`max-w-[80%] space-y-2`}>
                           <div
                             className={`p-3 rounded-lg ${
-                              message.sender === "user" ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-900"
+                              message.sender === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
                             }`}
                           >
                             <p>{message.content}</p>
                           </div>
 
                           {message.feedback && (
-                            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 space-y-2">
-                              <h4 className="font-semibold text-sm text-yellow-800">Feedback & Suggestions</h4>
+                            <div className="bg-card border border-border rounded-lg p-3 space-y-2">
+                              <h4 className="font-semibold text-sm text-foreground">{t('feedbackSuggestions')}</h4>
                               {message.feedback.grammar.length > 0 && (
                                 <div>
-                                  <p className="text-xs font-medium text-yellow-700">Grammar:</p>
-                                  <ul className="text-xs text-yellow-600 list-disc list-inside">
+                                  <p className="text-xs font-medium text-foreground">{t('grammar')}</p>
+                                  <ul className="text-xs text-muted-foreground list-disc list-inside">
                                     {message.feedback.grammar.map((item, i) => (
                                       <li key={i}>{item}</li>
                                     ))}
@@ -158,8 +158,8 @@ export default function AITutorPage() {
                               )}
                               {message.feedback.suggestions.length > 0 && (
                                 <div>
-                                  <p className="text-xs font-medium text-yellow-700">Suggestions:</p>
-                                  <ul className="text-xs text-yellow-600 list-disc list-inside">
+                                  <p className="text-xs font-medium text-foreground">{t('suggestions')}</p>
+                                  <ul className="text-xs text-muted-foreground list-disc list-inside">
                                     {message.feedback.suggestions.map((item, i) => (
                                       <li key={i}>{item}</li>
                                     ))}
@@ -185,7 +185,7 @@ export default function AITutorPage() {
                       {isRecording ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
                     </Button>
                     <Input
-                      placeholder="Type your message or use voice input..."
+                      placeholder={t('typeMessage')}
                       value={inputMessage}
                       onChange={(e) => setInputMessage(e.target.value)}
                       onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
@@ -195,10 +195,10 @@ export default function AITutorPage() {
                       <Send className="h-4 w-4" />
                     </Button>
                   </div>
-                  <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
-                    <Volume2 className="h-3 w-3" />
-                    <span>AI will provide pronunciation feedback and grammar suggestions</span>
-                  </div>
+                    <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
+                      <Volume2 className="h-3 w-3" />
+                      <span>{t('aiWillProvide')}</span>
+                    </div>
                 </div>
               </CardContent>
             </Card>
@@ -211,7 +211,7 @@ export default function AITutorPage() {
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <BookOpen className="h-5 w-5" />
-                  Topics
+                  {t('topics')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
@@ -222,7 +222,7 @@ export default function AITutorPage() {
                     className="w-full justify-start text-sm"
                     onClick={() => setCurrentTopic(topic)}
                   >
-                    {topic}
+                    {t(topic)}
                   </Button>
                 ))}
               </CardContent>
@@ -233,21 +233,21 @@ export default function AITutorPage() {
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Target className="h-5 w-5" />
-                  Session Goals
+                  {t('sessionGoals')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex items-center gap-2 text-sm">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span>Practice past tense</span>
+                  <span>{t('practicePastTense')}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                  <span>Improve pronunciation</span>
+                  <span>{t('improvePronunciation')}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-                  <span>Use 5 new vocabulary words</span>
+                  <span>{t('use5NewVocab')}</span>
                 </div>
               </CardContent>
             </Card>
@@ -255,20 +255,20 @@ export default function AITutorPage() {
             {/* Quick Actions */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Quick Actions</CardTitle>
+                <CardTitle className="text-lg">{t('quickActions')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
                 <Button variant="outline" className="w-full justify-start text-sm bg-transparent">
-                  📝 Grammar Check
+                  📝 {t('grammarCheck')}
                 </Button>
                 <Button variant="outline" className="w-full justify-start text-sm bg-transparent">
-                  🔊 Pronunciation Practice
+                  🔊 {t('pronunciationPractice')}
                 </Button>
                 <Button variant="outline" className="w-full justify-start text-sm bg-transparent">
-                  📚 Vocabulary Builder
+                  📚 {t('vocabularyBuilder')}
                 </Button>
                 <Button variant="outline" className="w-full justify-start text-sm bg-transparent">
-                  🎯 Take Quiz
+                  🎯 {t('takeQuiz')}
                 </Button>
               </CardContent>
             </Card>

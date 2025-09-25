@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from 'next-intl'
 import {
   Home,
   BookOpen,
@@ -15,6 +16,7 @@ import {
   ChevronDown,
   LogOut,
 } from "lucide-react"
+import { ThemeToggle } from './theme-toggle'
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -41,48 +43,48 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 
 const menuItems = [
   {
-    title: "Dashboard",
+    titleKey: "dashboard",
     url: "/dashboard",
     icon: Home,
   },
   {
-    title: "Learning",
+    titleKey: "learning",
     icon: BookOpen,
     items: [
       {
-        title: "AI Tutor",
+        titleKey: "aiTutor",
         url: "/lessons/ai-tutor",
         icon: Brain,
       },
       {
-        title: "Interactive Lessons",
+        titleKey: "interactiveLessons",
         url: "/lessons/interactive",
         icon: BookOpen,
       },
       {
-        title: "Vocabulary Builder",
+        titleKey: "vocabularyBuilder",
         url: "/lessons/vocabulary",
         icon: Award,
       },
     ],
   },
   {
-    title: "Live Tutoring",
+    titleKey: "liveTutoring",
     url: "/tutoring",
     icon: Users,
   },
   {
-    title: "Analytics",
+    titleKey: "analytics",
     url: "/analytics",
     icon: BarChart3,
   },
   {
-    title: "Schedule",
+    titleKey: "schedule",
     url: "/schedule",
     icon: Calendar,
   },
   {
-    title: "Community",
+    titleKey: "community",
     url: "/community",
     icon: MessageSquare,
   },
@@ -90,10 +92,12 @@ const menuItems = [
 
 export function AppSidebar() {
   const pathname = usePathname()
-  const [openItems, setOpenItems] = useState<string[]>(["Learning"])
+  const [openItems, setOpenItems] = useState<string[]>(["learning"])
+  const tNav = useTranslations('nav')
+  const t = useTranslations('sidebar')
 
-  const toggleItem = (title: string) => {
-    setOpenItems((prev) => (prev.includes(title) ? prev.filter((item) => item !== title) : [...prev, title]))
+  const toggleItem = (key: string) => {
+    setOpenItems((prev) => (prev.includes(key) ? prev.filter((item) => item !== key) : [...prev, key]))
   }
 
   return (
@@ -102,36 +106,36 @@ export function AppSidebar() {
         <div className="flex items-center gap-2 px-4 py-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white font-bold">E</div>
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">LearnMio AI</span>
-            <span className="truncate text-xs text-muted-foreground">Learning Platform</span>
+            <span className="truncate font-semibold">{t('brand')}</span>
+            <span className="truncate text-xs text-muted-foreground">{t('brandTagline')}</span>
           </div>
         </div>
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Main Navigation</SidebarGroupLabel>
+    <SidebarGroup>
+    <SidebarGroupLabel>{t('mainNavigation')}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem key={item.titleKey}>
                   {item.items ? (
-                    <Collapsible open={openItems.includes(item.title)} onOpenChange={() => toggleItem(item.title)}>
+                    <Collapsible open={openItems.includes(item.titleKey)} onOpenChange={() => toggleItem(item.titleKey)}>
                       <CollapsibleTrigger asChild>
                         <SidebarMenuButton className="w-full">
-                          <item.icon />
-                          <span>{item.title}</span>
+        <item.icon />
+        <span>{tNav(item.titleKey)}</span>
                           <ChevronDown className="ml-auto transition-transform group-data-[state=open]:rotate-180" />
                         </SidebarMenuButton>
                       </CollapsibleTrigger>
                       <CollapsibleContent>
                         <SidebarMenuSub>
                           {item.items.map((subItem) => (
-                            <SidebarMenuSubItem key={subItem.title}>
+                            <SidebarMenuSubItem key={subItem.titleKey}>
                               <SidebarMenuSubButton asChild isActive={pathname === subItem.url}>
                                 <Link href={subItem.url}>
-                                  <subItem.icon />
-                                  <span>{subItem.title}</span>
+          <subItem.icon />
+          <span>{tNav(subItem.titleKey)}</span>
                                 </Link>
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
@@ -142,8 +146,8 @@ export function AppSidebar() {
                   ) : (
                     <SidebarMenuButton asChild isActive={pathname === item.url}>
                       <Link href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
+      <item.icon />
+      <span>{tNav(item.titleKey)}</span>
                       </Link>
                     </SidebarMenuButton>
                   )}
@@ -154,19 +158,19 @@ export function AppSidebar() {
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarGroupLabel>Quick Stats</SidebarGroupLabel>
+          <SidebarGroupLabel>{t('quickStats')}</SidebarGroupLabel>
           <SidebarGroupContent>
             <div className="px-3 py-2 space-y-3">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Current Level</span>
+                <span className="text-muted-foreground">{t('currentLevel')}</span>
                 <Badge variant="secondary">B2</Badge>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Streak</span>
+                <span className="text-muted-foreground">{t('streak')}</span>
                 <span className="font-medium">28 days</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">This Week</span>
+                <span className="text-muted-foreground">{t('thisWeek')}</span>
                 <span className="font-medium">12 lessons</span>
               </div>
             </div>
@@ -188,8 +192,8 @@ export function AppSidebar() {
                     <AvatarFallback className="rounded-lg">AJ</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">Alex Johnson</span>
-                    <span className="truncate text-xs">alex@example.com</span>
+                    <span className="truncate font-semibold">{t('userName')}</span>
+                    <span className="truncate text-xs">{t('userEmail')}</span>
                   </div>
                   <ChevronDown className="ml-auto size-4" />
                 </SidebarMenuButton>
@@ -200,17 +204,22 @@ export function AppSidebar() {
                 align="end"
                 sideOffset={4}
               >
-                <DropdownMenuItem>
-                  <User />
-                  Profile Settings
+                <DropdownMenuItem asChild>
+                  <Link href="/profile">
+                    <User className="mr-2 h-4 w-4" />
+                    {t('profileSettings')}
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Settings />
-                  Preferences
+                  <Settings className="mr-2 h-4 w-4" />
+                  {t('preferences')}
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <LogOut />
-                  Log out
+                  <ThemeToggle />
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-red-600 dark:text-red-400">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  {tNav('logout')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
