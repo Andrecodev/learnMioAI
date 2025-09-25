@@ -8,11 +8,11 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/src/types/components/ui/card";
-import { Button } from "@/src/types/components/ui/button";
-import { Progress } from "@/src/types/components/ui/progress";
-import { Badge } from "@/src/types/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/src/types/components/ui/avatar";
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   BookOpen,
   Brain,
@@ -27,7 +27,7 @@ import {
   Languages,
 } from "lucide-react";
 import Link from "next/link";
-import { LevelTestBanner } from "@/src/types/components/LevelTestBanner";
+import { LevelTestBanner } from "@/components/LevelTestBanner";
 import { useTranslations } from "next-intl";
 
 type localeType = "en" | "es";

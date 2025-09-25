@@ -1,5 +1,5 @@
-import ProfileForm from '@/src/types/components/forms/ProfileForm';
-import { SlideInFromBottom, FadeIn } from '@/src/types/components/ui/motion';
+import ProfileForm from '@/components/forms/ProfileForm';
+import { SlideInFromBottom, FadeIn } from '@/components/ui/motion';
 import { useTranslations } from 'next-intl';
 
 export default function ProfilePage() {

@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { Button } from "@/src/types/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/types/components/ui/card"
-import { Alert, AlertDescription } from "@/src/types/components/ui/alert"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Loader2, BookOpen, Brain, Users, Award, AlertCircle } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
 import { useTranslations } from "next-intl"

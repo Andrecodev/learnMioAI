@@ -1,5 +1,5 @@
 // API utilities for external endpoints
-import { ProfileFormData } from '@/src/types/forms';
+import { ProfileFormData } from '@/types/forms';
 
 export const api = {
   // Base configuration for local Next.js API routes

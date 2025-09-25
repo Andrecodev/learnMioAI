@@ -1,7 +1,7 @@
 import type React from "react"
-import { SidebarProvider } from "@/src/types/components/ui/sidebar"
-import { AppSidebar } from "@/src/types/components/app-sidebar"
-import { AuthGuard } from "@/src/types/components/auth-guard"
+import { SidebarProvider } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
+import { AuthGuard } from "@/components/auth-guard"
 
 export default function DashboardLayout({
   children,
