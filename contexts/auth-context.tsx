@@ -5,8 +5,7 @@ import { createContext, useContext, useEffect, useState } from "react"
 import { 
   type User, 
   onAuthStateChanged, 
-  signInWithRedirect, 
-  getRedirectResult,
+  signInWithPopup,
   signOut 
 } from "firebase/auth"
 import { auth, googleProvider } from "@/lib/firebase"
@@ -36,21 +35,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isProfileCompleted, setIsProfileCompleted] = useState(false)
 
   useEffect(() => {
-    // Handle redirect result on page load
-    const handleRedirectResult = async () => {
-      try {
-        const result = await getRedirectResult(auth)
-        if (result) {
-          // User successfully signed in via redirect
-          console.log("User signed in via redirect:", result.user)
-        }
-      } catch (error) {
-        console.error("Error handling redirect result:", error)
-      }
-    }
-
-    handleRedirectResult()
-
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user)
       setLoading(false)
@@ -75,7 +59,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithRedirect(auth, googleProvider)
+      await signInWithPopup(auth, googleProvider)
     } catch (error: any) {
       console.error("Error signing in with Google:", error)
 
@@ -84,10 +68,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         throw new Error(
           `Domain not authorized: ${currentDomain}. Please add this domain to your Firebase console under Authentication > Settings > Authorized domains.`,
         )
-      } else if (error.code === "auth/redirect-cancelled-by-user") {
+      } else if (error.code === "auth/popup-closed-by-user") {
         throw new Error("Sign-in was cancelled. Please try again.")
-      } else if (error.code === "auth/redirect-operation-pending") {
-        throw new Error("A redirect sign-in is already pending. Please wait.")
+      } else if (error.code === "auth/popup-blocked") {
+        throw new Error("Pop-up was blocked by your browser. Please allow pop-ups and try again.")
       } else {
         throw new Error(error.message || "An error occurred during sign-in. Please try again.")
       }

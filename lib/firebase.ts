@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app"
-import { getAuth, GoogleAuthProvider } from "firebase/auth"
+import { getAuth, GoogleAuthProvider, connectAuthEmulator } from "firebase/auth"
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -18,11 +18,16 @@ const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app)
 export const googleProvider = new GoogleAuthProvider()
 
-// Configure Google provider
+// Configure Google provider with better settings
 googleProvider.addScope('email')
 googleProvider.addScope('profile')
+googleProvider.addScope('https://www.googleapis.com/auth/userinfo.email')
+googleProvider.addScope('https://www.googleapis.com/auth/userinfo.profile')
+
 googleProvider.setCustomParameters({
-  prompt: 'select_account'
+  prompt: 'select_account',
+  include_granted_scopes: 'true',
+  access_type: 'online'
 })
 
 export default app
