@@ -5,8 +5,7 @@ import { createContext, useContext, useEffect, useState } from "react"
 import { 
   type User, 
   onAuthStateChanged, 
-  signInWithPopup,
-  signOut 
+  signInWithPopup,  signOut 
 } from "firebase/auth"
 import { auth, googleProvider } from "@/lib/firebase"
 
