@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { ProfileFormData } from '@/types/forms';
+import { ProfileFormData } from '@/src/types/forms';
 
 // Profile form state interface
 interface ProfileFormState {

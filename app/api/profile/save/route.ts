@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { ProfileFormData } from '@/types/forms'
+import { ProfileFormData } from '@/src/types/forms'
 
 export async function POST(request: NextRequest) {
   try {
