@@ -31,6 +31,15 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  // PWA Configuration
+  async rewrites() {
+    return [
+      {
+        source: '/sw.js',
+        destination: '/_next/static/chunks/sw.js',
+      },
+    ];
+  },
 }
 
 export default withNextIntl(nextConfig)
