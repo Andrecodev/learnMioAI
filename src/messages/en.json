@@ -18,7 +18,7 @@
     "logout": "Log out"
   },
   "dashboard": {
-    "welcomeBack": "Welcome back, Alex!",
+    "welcomeBack": "Welcome back, {name}!",
     "continueJourney": "Continue your English learning journey",
     "yourProgress": "Your Progress",
     "currentLevel": "Current level: Intermediate (B2)",
@@ -288,8 +288,6 @@
     "thisWeek": "This Week",
   "brand": "LearnMio AI",
   "brandTagline": "Learning Platform",
-    "userName": "Alex Johnson",
-    "userEmail": "alex@example.com",
     "profileSettings": "Profile Settings",
     "preferences": "Preferences"
   }

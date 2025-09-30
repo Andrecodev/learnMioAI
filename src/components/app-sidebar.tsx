@@ -20,6 +20,7 @@ import {
 import { ThemeToggle } from './theme-toggle'
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { getUserDisplayName, getUserEmail } from "@/lib/user-utils"
 
 import {
   Sidebar,
@@ -38,7 +39,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { UserAvatar } from "@/components/ui/user-avatar"
 import { Badge } from "@/components/ui/badge"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 
@@ -97,6 +98,10 @@ export function AppSidebar() {
   const tNav = useTranslations('nav')
   const t = useTranslations('sidebar')
   const { logout, user } = useAuth()
+
+  // Get user data
+  const userName = getUserDisplayName(user);
+  const userEmail = getUserEmail(user);
 
   const toggleItem = (key: string) => {
     setOpenItems((prev) => (prev.includes(key) ? prev.filter((item) => item !== key) : [...prev, key]))
@@ -199,13 +204,10 @@ export function AppSidebar() {
                   size="lg"
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
-                  <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage src="/placeholder.svg?height=32&width=32" alt="Alex Johnson" />
-                    <AvatarFallback className="rounded-lg">AJ</AvatarFallback>
-                  </Avatar>
+                  <UserAvatar user={user} size="md" className="rounded-lg" />
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">{t('userName')}</span>
-                    <span className="truncate text-xs">{t('userEmail')}</span>
+                    <span className="truncate font-semibold">{userName}</span>
+                    <span className="truncate text-xs">{userEmail}</span>
                   </div>
                   <ChevronDown className="ml-auto size-4" />
                 </SidebarMenuButton>
@@ -222,10 +224,10 @@ export function AppSidebar() {
                     {t('profileSettings')}
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                {/* <DropdownMenuItem>
                   <Settings className="mr-2 h-4 w-4" />
                   {t('preferences')}
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
                 <DropdownMenuItem>
                   <ThemeToggle />
                 </DropdownMenuItem>

@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { UserAvatar } from "@/components/ui/user-avatar";
 import {
   BookOpen,
   Brain,
@@ -29,6 +29,8 @@ import {
 import Link from "next/link";
 import { LevelTestBanner } from "@/components/LevelTestBanner";
 import { useTranslations } from "next-intl";
+import { useAuth } from "@/contexts/auth-context";
+import { getUserDisplayName } from "@/lib/user-utils";
 
 type localeType = "en" | "es";
 
@@ -36,11 +38,15 @@ export default function DashboardPage() {
   const [locale, setLocale] = useState<localeType>("en");
   const router = useRouter();
   const t = useTranslations("dashboard");
+  const { user } = useAuth();
   const lessonTypeKeyMap: Record<string, string> = {
     "AI Tutor": "lessonType.aiTutor",
     "Live Tutor": "lessonType.liveTutor",
     "Self-Study": "lessonType.selfStudy",
   };
+
+  // Get user data
+  const userName = getUserDisplayName(user);
   
   const changeLocale = () => {
     const loc: localeType = locale === "en" ? "es" : "en";
@@ -115,7 +121,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-foreground">
-                {t("welcomeBack", { name: "Pedri" })}!
+                {t("welcomeBack", { name: userName })}!
               </h1>
               <p className="text-muted-foreground mt-1">
                 {t("continueJourney")}
@@ -137,10 +143,7 @@ export default function DashboardPage() {
                 <Languages className="h-2 w-2 mr-1" />
                 {locale?.toUpperCase()}
               </Badge>
-              <Avatar>
-                <AvatarImage src="/placeholder.svg?height=40&width=40" />
-                <AvatarFallback>AJ</AvatarFallback>
-              </Avatar>
+              <UserAvatar user={user} size="lg" />
             </div>
           </div>
         </div>
