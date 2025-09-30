@@ -121,7 +121,7 @@ export function AppSidebar() {
     <Sidebar variant="inset">
       <SidebarHeader className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
         <div className="flex items-center gap-2 px-3 py-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white font-bold text-sm">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-sm">
             E
           </div>
           <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
@@ -182,7 +182,7 @@ export function AppSidebar() {
             <div className="px-2 py-1 space-y-2">
               <div className="flex items-center justify-between text-sm py-1">
                 <span className="text-gray-600 dark:text-gray-400 truncate text-xs">{t('currentLevel')}</span>
-                <Badge variant="secondary" className="text-xs px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">B2</Badge>
+                <Badge variant="secondary" className="text-xs px-2 py-0.5 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary">B2</Badge>
               </div>
               <div className="flex items-center justify-between text-sm py-1">
                 <span className="text-gray-600 dark:text-gray-400 truncate text-xs">{t('streak')}</span>

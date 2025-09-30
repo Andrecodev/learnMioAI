@@ -144,7 +144,7 @@ export default function DashboardPage() {
               <Badge
                 onClick={changeLocale}
                 variant="default"
-                className="text-xs md:text-sm bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 cursor-pointer px-2 py-1"
+                className="text-xs md:text-sm bg-primary/10 dark:bg-primary/20 text-primary cursor-pointer px-2 py-1"
               >
                 <Languages className="h-3 w-3 mr-1" />
                 <span className="font-medium">{locale?.toUpperCase()}</span>
@@ -165,7 +165,7 @@ export default function DashboardPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  <TrendingUp className="h-5 w-5 text-primary" />
                   {t("yourProgress")}
                 </CardTitle>
                 <CardDescription className="text-muted-foreground">
@@ -176,20 +176,20 @@ export default function DashboardPage() {
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-foreground">{t("overallProgress")}</span>
-                    <span className="text-blue-600 dark:text-blue-400 font-medium">
+                    <span className="text-primary font-medium">
                       75%
                     </span>
                   </div>
                   <Progress
                     value={75}
-                    className="h-3 bg-blue-100 dark:bg-blue-950"
+                    className="h-3"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="text-center p-4 bg-blue-100 dark:bg-blue-950/50 rounded-lg">
-                    <BookOpen className="h-6 w-6 text-blue-600 dark:text-blue-400 mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                  <div className="text-center p-4 bg-primary/10 dark:bg-primary/20 rounded-lg">
+                    <BookOpen className="h-6 w-6 text-primary mx-auto mb-2" />
+                    <div className="text-2xl font-bold text-primary">
                       156
                     </div>
                     <div className="text-sm text-muted-foreground">
@@ -237,7 +237,7 @@ export default function DashboardPage() {
                 <div className="grid md:grid-cols-3 gap-4">
                   <Button
                     asChild
-                    className="h-24 flex-col gap-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700"
+                    className="h-24 flex-col gap-2"
                   >
                       <Link href="/lessons/ai-tutor">
                       <Brain className="h-6 w-6" />
@@ -393,13 +393,13 @@ export default function DashboardPage() {
                     <span className="text-foreground">
                       {t("goal.practiceSpeaking")}
                     </span>
-                    <span className="text-blue-600 dark:text-blue-400 font-medium">
+                    <span className="text-primary font-medium">
                       2/3
                     </span>
                   </div>
                   <Progress
                     value={67}
-                    className="h-2 bg-blue-100 dark:bg-blue-950"
+                    className="h-2"
                   />
                 </div>
                 <div className="space-y-2">

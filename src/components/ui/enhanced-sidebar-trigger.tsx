@@ -42,19 +42,19 @@ export function EnhancedSidebarTrigger({
         
         // Color and interaction states
         "bg-white/80 dark:bg-gray-800/80",
-        "hover:bg-blue-50 dark:hover:bg-blue-950/50",
-        "hover:border-blue-200 dark:hover:border-blue-700",
-        "active:scale-95 active:bg-blue-100 dark:active:bg-blue-900/50",
+        "hover:bg-primary/10 dark:hover:bg-primary/20",
+        "hover:border-primary/30 dark:hover:border-primary/40",
+        "active:scale-95 active:bg-primary/20 dark:active:bg-primary/30",
         
         // Shadow and backdrop
         "shadow-sm hover:shadow-md backdrop-blur-sm",
-        "ring-0 hover:ring-2 hover:ring-blue-200/50 dark:hover:ring-blue-700/50",
+        "ring-0 hover:ring-2 hover:ring-primary/20 dark:hover:ring-primary/30",
         
         // Animation classes
         isPressed && "animate-pulse",
         
         // Focus styles
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
         
         className
       )}
@@ -64,7 +64,7 @@ export function EnhancedSidebarTrigger({
       {/* Animated background gradient */}
       <div 
         className={cn(
-          "absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-blue-500/5",
+          "absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5",
           "opacity-0 transition-opacity duration-300",
           "group-hover:opacity-100"
         )} 
@@ -78,7 +78,7 @@ export function EnhancedSidebarTrigger({
             className={cn(
               "w-4 h-0.5 rounded-full transition-all duration-300 ease-out",
               "bg-gray-600 dark:bg-gray-300",
-              "hover:bg-blue-600 dark:hover:bg-blue-400",
+              "hover:bg-primary",
               openMobile && isMobile 
                 ? "transform rotate-45 translate-y-1.5" 
                 : "transform translate-y-0"
@@ -90,7 +90,7 @@ export function EnhancedSidebarTrigger({
             className={cn(
               "w-4 h-0.5 rounded-full transition-all duration-200 ease-out my-1",
               "bg-gray-600 dark:bg-gray-300",
-              "hover:bg-blue-600 dark:hover:bg-blue-400",
+              "hover:bg-primary",
               openMobile && isMobile 
                 ? "opacity-0 scale-0" 
                 : "opacity-100 scale-100"
