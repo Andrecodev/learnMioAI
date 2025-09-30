@@ -119,19 +119,21 @@ export function AppSidebar() {
 
   return (
     <Sidebar variant="inset">
-      <SidebarHeader>
-        <div className="flex items-center gap-2 px-4 py-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white font-bold">E</div>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">{t('brand')}</span>
-            <span className="truncate text-xs text-muted-foreground">{t('brandTagline')}</span>
+      <SidebarHeader className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
+        <div className="flex items-center gap-2 px-3 py-3">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white font-bold text-sm">
+            E
+          </div>
+          <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
+            <span className="truncate font-semibold text-gray-900 dark:text-gray-100">{t('brand')}</span>
+            <span className="truncate text-xs text-gray-600 dark:text-gray-400">{t('brandTagline')}</span>
           </div>
         </div>
       </SidebarHeader>
 
-      <SidebarContent>
-    <SidebarGroup>
-    <SidebarGroupLabel>{t('mainNavigation')}</SidebarGroupLabel>
+      <SidebarContent className="scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 bg-white dark:bg-gray-950">
+        <SidebarGroup>
+          <SidebarGroupLabel className="px-2 text-gray-700 dark:text-gray-300">{t('mainNavigation')}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (
@@ -174,42 +176,42 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarGroup>
-          <SidebarGroupLabel>{t('quickStats')}</SidebarGroupLabel>
+        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+          <SidebarGroupLabel className="px-2 text-gray-700 dark:text-gray-300">{t('quickStats')}</SidebarGroupLabel>
           <SidebarGroupContent>
-            <div className="px-3 py-2 space-y-3">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">{t('currentLevel')}</span>
-                <Badge variant="secondary">B2</Badge>
+            <div className="px-2 py-1 space-y-2">
+              <div className="flex items-center justify-between text-sm py-1">
+                <span className="text-gray-600 dark:text-gray-400 truncate text-xs">{t('currentLevel')}</span>
+                <Badge variant="secondary" className="text-xs px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">B2</Badge>
               </div>
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">{t('streak')}</span>
-                <span className="font-medium">28 days</span>
+              <div className="flex items-center justify-between text-sm py-1">
+                <span className="text-gray-600 dark:text-gray-400 truncate text-xs">{t('streak')}</span>
+                <span className="font-medium text-xs text-gray-900 dark:text-gray-100">28 days</span>
               </div>
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">{t('thisWeek')}</span>
-                <span className="font-medium">12 lessons</span>
+              <div className="flex items-center justify-between text-sm py-1">
+                <span className="text-gray-600 dark:text-gray-400 truncate text-xs">{t('thisWeek')}</span>
+                <span className="font-medium text-xs text-gray-900 dark:text-gray-100">12 lessons</span>
               </div>
             </div>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter>
+      <SidebarFooter className="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
                   size="lg"
-                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                  className="data-[state=open]:bg-gray-100 dark:data-[state=open]:bg-gray-800 data-[state=open]:text-gray-900 dark:data-[state=open]:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 group-data-[collapsible=icon]:!p-2 group-data-[collapsible=icon]:!size-8"
                 >
-                  <UserAvatar user={user} size="md" className="rounded-lg" />
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">{userName}</span>
-                    <span className="truncate text-xs">{userEmail}</span>
+                  <UserAvatar user={user} size="sm" className="rounded-lg group-data-[collapsible=icon]:!size-6" />
+                  <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
+                    <span className="truncate font-semibold text-xs md:text-sm text-gray-900 dark:text-gray-100">{userName}</span>
+                    <span className="truncate text-xs opacity-60 text-gray-600 dark:text-gray-400">{userEmail}</span>
                   </div>
-                  <ChevronDown className="ml-auto size-4" />
+                  <ChevronDown className="ml-auto size-4 group-data-[collapsible=icon]:hidden text-gray-600 dark:text-gray-400" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent

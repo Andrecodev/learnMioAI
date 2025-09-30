@@ -187,7 +187,7 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
+          className="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 w-(--sidebar-width) p-0 [&>button]:hidden border-r border-gray-200 dark:border-gray-800"
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -199,7 +199,7 @@ function Sidebar({
             <SheetTitle>Sidebar</SheetTitle>
             <SheetDescription>Displays the mobile sidebar.</SheetDescription>
           </SheetHeader>
-          <div className="flex h-full w-full flex-col">{children}</div>
+          <div className="flex h-full w-full flex-col bg-white dark:bg-gray-950">{children}</div>
         </SheetContent>
       </Sheet>
     )
@@ -244,7 +244,7 @@ function Sidebar({
         <div
           data-sidebar="sidebar"
           data-slot="sidebar-inner"
-          className="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-screen w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
+          className="bg-white dark:bg-gray-950 group-data-[variant=floating]:border-gray-200 dark:group-data-[variant=floating]:border-gray-800 flex h-screen w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm border-r border-gray-200 dark:border-gray-800"
         >
           {children}
         </div>
@@ -258,7 +258,7 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar } = useSidebar()
+  const { toggleSidebar, openMobile } = useSidebar()
 
   return (
     <Button
@@ -266,15 +266,49 @@ function SidebarTrigger({
       data-slot="sidebar-trigger"
       variant="ghost"
       size="icon"
-      className={cn("size-7", className)}
+      className={cn(
+        "size-9 rounded-lg transition-all duration-200 ease-in-out",
+        "hover:bg-blue-50 dark:hover:bg-blue-950/50",
+        "active:scale-95 active:bg-blue-100 dark:active:bg-blue-900/50",
+        "border border-transparent hover:border-blue-200 dark:hover:border-blue-800",
+        "shadow-sm hover:shadow-md",
+        "group relative overflow-hidden",
+        className
+      )}
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
       }}
       {...props}
     >
-      <PanelLeftIcon />
-      <span className="sr-only">Toggle Sidebar</span>
+      {/* Background animation */}
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      
+      {/* Animated hamburger/close icon */}
+      <div className="relative z-10 flex flex-col items-center justify-center w-5 h-5">
+        <div className={cn(
+          "w-4 h-0.5 bg-gray-700 dark:bg-gray-300 rounded-full transition-all duration-300 ease-in-out transform-gpu",
+          "group-hover:bg-blue-600 dark:group-hover:bg-blue-400",
+          openMobile ? "rotate-45 translate-y-1.5" : "translate-y-0"
+        )} />
+        <div className={cn(
+          "w-4 h-0.5 bg-gray-700 dark:bg-gray-300 rounded-full transition-all duration-300 ease-in-out transform-gpu my-1",
+          "group-hover:bg-blue-600 dark:group-hover:bg-blue-400",
+          openMobile ? "opacity-0 scale-0" : "opacity-100 scale-100"
+        )} />
+        <div className={cn(
+          "w-4 h-0.5 bg-gray-700 dark:bg-gray-300 rounded-full transition-all duration-300 ease-in-out transform-gpu",
+          "group-hover:bg-blue-600 dark:group-hover:bg-blue-400",
+          openMobile ? "-rotate-45 -translate-y-1.5" : "translate-y-0"
+        )} />
+      </div>
+      
+      {/* Ripple effect */}
+      <div className="absolute inset-0 rounded-lg opacity-0 group-active:opacity-20 bg-blue-500 animate-ping" />
+      
+      <span className="sr-only">
+        {openMobile ? "Close navigation menu" : "Open navigation menu"}
+      </span>
     </Button>
   )
 }

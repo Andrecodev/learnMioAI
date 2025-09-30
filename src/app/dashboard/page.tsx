@@ -31,6 +31,7 @@ import { LevelTestBanner } from "@/components/LevelTestBanner";
 import { useTranslations } from "next-intl";
 import { useAuth } from "@/contexts/auth-context";
 import { getUserDisplayName } from "@/lib/user-utils";
+import { EnhancedSidebarTrigger } from "@/components/ui/enhanced-sidebar-trigger";
 
 type localeType = "en" | "es";
 
@@ -117,33 +118,38 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="bg-card border-b border-border">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">
-                {t("welcomeBack", { name: userName })}!
-              </h1>
-              <p className="text-muted-foreground mt-1">
-                {t("continueJourney")}
-              </p>
+        <div className="container mx-auto px-4 py-3 md:py-6">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 md:gap-3 min-w-0 flex-1">
+              {/* Mobile sidebar trigger */}
+              <EnhancedSidebarTrigger className="md:hidden shrink-0" />
+              <div className="min-w-0">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground truncate">
+                  {t("welcomeBack", { name: userName })}!
+                </h1>
+                <p className="text-muted-foreground mt-1 text-sm md:text-base truncate">
+                  {t("continueJourney")}
+                </p>
+              </div>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 md:gap-4 shrink-0">
               <Badge
                 variant="secondary"
-                className="text-sm bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300"
+                className="text-xs md:text-sm bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 hidden sm:flex"
               >
-                <Flame className="h-4 w-4 mr-1" />
-                28-day streak
+                <Flame className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+                <span className="hidden md:inline">28-day streak</span>
+                <span className="md:hidden">28d</span>
               </Badge>
               <Badge
                 onClick={changeLocale}
                 variant="default"
-                className="text-sm bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 cursor-pointer"
+                className="text-xs md:text-sm bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 cursor-pointer px-2 py-1"
               >
-                <Languages className="h-2 w-2 mr-1" />
-                {locale?.toUpperCase()}
+                <Languages className="h-3 w-3 mr-1" />
+                <span className="font-medium">{locale?.toUpperCase()}</span>
               </Badge>
-              <UserAvatar user={user} size="lg" />
+              <UserAvatar user={user} size="md" />
             </div>
           </div>
         </div>
@@ -151,10 +157,10 @@ export default function DashboardPage() {
 
       <LevelTestBanner />
 
-      <div className="container mx-auto px-4 py-4">
-        <div className="grid lg:grid-cols-3 gap-8">
+      <div className="container mx-auto px-3 md:px-4 py-4 md:py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="col-span-1 lg:col-span-2 space-y-4 md:space-y-6 lg:space-y-8">
             {/* Progress Overview */}
             <Card>
               <CardHeader>
@@ -307,8 +313,8 @@ export default function DashboardPage() {
             </Card>
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
+          {/* Right Sidebar Content */}
+          <div className="space-y-4 md:space-y-6">
             {/* Upcoming Lessons */}
             <Card>
               <CardHeader>
