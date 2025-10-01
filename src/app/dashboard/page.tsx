@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { UserAvatar } from "@/components/ui/user-avatar";
 import {
   BookOpen,
   Brain,
@@ -29,6 +29,9 @@ import {
 import Link from "next/link";
 import { LevelTestBanner } from "@/components/LevelTestBanner";
 import { useTranslations } from "next-intl";
+import { useAuth } from "@/contexts/auth-context";
+import { getUserDisplayName } from "@/lib/user-utils";
+import { EnhancedSidebarTrigger } from "@/components/ui/enhanced-sidebar-trigger";
 
 type localeType = "en" | "es";
 
@@ -36,11 +39,15 @@ export default function DashboardPage() {
   const [locale, setLocale] = useState<localeType>("en");
   const router = useRouter();
   const t = useTranslations("dashboard");
+  const { user } = useAuth();
   const lessonTypeKeyMap: Record<string, string> = {
     "AI Tutor": "lessonType.aiTutor",
     "Live Tutor": "lessonType.liveTutor",
     "Self-Study": "lessonType.selfStudy",
   };
+
+  // Get user data
+  const userName = getUserDisplayName(user);
   
   const changeLocale = () => {
     const loc: localeType = locale === "en" ? "es" : "en";
@@ -111,36 +118,38 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="bg-card border-b border-border">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">
-                {t("welcomeBack", { name: "Pedri" })}!
-              </h1>
-              <p className="text-muted-foreground mt-1">
-                {t("continueJourney")}
-              </p>
+        <div className="container mx-auto px-4 py-3 md:py-6">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 md:gap-3 min-w-0 flex-1">
+              {/* Mobile sidebar trigger */}
+              <EnhancedSidebarTrigger className="md:hidden shrink-0" />
+              <div className="min-w-0">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground truncate">
+                  {t("welcomeBack", { name: userName })}!
+                </h1>
+                <p className="text-muted-foreground mt-1 text-sm md:text-base truncate">
+                  {t("continueJourney")}
+                </p>
+              </div>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 md:gap-4 shrink-0">
               <Badge
                 variant="secondary"
-                className="text-sm bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300"
+                className="text-xs md:text-sm bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 hidden sm:flex"
               >
-                <Flame className="h-4 w-4 mr-1" />
-                28-day streak
+                <Flame className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+                <span className="hidden md:inline">28-day streak</span>
+                <span className="md:hidden">28d</span>
               </Badge>
               <Badge
                 onClick={changeLocale}
                 variant="default"
-                className="text-sm bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 cursor-pointer"
+                className="text-xs md:text-sm bg-primary/10 dark:bg-primary/20 text-primary cursor-pointer px-2 py-1"
               >
-                <Languages className="h-2 w-2 mr-1" />
-                {locale?.toUpperCase()}
+                <Languages className="h-3 w-3 mr-1" />
+                <span className="font-medium">{locale?.toUpperCase()}</span>
               </Badge>
-              <Avatar>
-                <AvatarImage src="/placeholder.svg?height=40&width=40" />
-                <AvatarFallback>AJ</AvatarFallback>
-              </Avatar>
+              <UserAvatar user={user} size="md" />
             </div>
           </div>
         </div>
@@ -148,15 +157,15 @@ export default function DashboardPage() {
 
       <LevelTestBanner />
 
-      <div className="container mx-auto px-4 py-4">
-        <div className="grid lg:grid-cols-3 gap-8">
+      <div className="container mx-auto px-3 md:px-4 py-4 md:py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="col-span-1 lg:col-span-2 space-y-4 md:space-y-6 lg:space-y-8">
             {/* Progress Overview */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  <TrendingUp className="h-5 w-5 text-primary" />
                   {t("yourProgress")}
                 </CardTitle>
                 <CardDescription className="text-muted-foreground">
@@ -167,20 +176,20 @@ export default function DashboardPage() {
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-foreground">{t("overallProgress")}</span>
-                    <span className="text-blue-600 dark:text-blue-400 font-medium">
+                    <span className="text-primary font-medium">
                       75%
                     </span>
                   </div>
                   <Progress
                     value={75}
-                    className="h-3 bg-blue-100 dark:bg-blue-950"
+                    className="h-3"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="text-center p-4 bg-blue-100 dark:bg-blue-950/50 rounded-lg">
-                    <BookOpen className="h-6 w-6 text-blue-600 dark:text-blue-400 mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                  <div className="text-center p-4 bg-primary/10 dark:bg-primary/20 rounded-lg">
+                    <BookOpen className="h-6 w-6 text-primary mx-auto mb-2" />
+                    <div className="text-2xl font-bold text-primary">
                       156
                     </div>
                     <div className="text-sm text-muted-foreground">
@@ -228,7 +237,7 @@ export default function DashboardPage() {
                 <div className="grid md:grid-cols-3 gap-4">
                   <Button
                     asChild
-                    className="h-24 flex-col gap-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700"
+                    className="h-24 flex-col gap-2"
                   >
                       <Link href="/lessons/ai-tutor">
                       <Brain className="h-6 w-6" />
@@ -304,8 +313,8 @@ export default function DashboardPage() {
             </Card>
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
+          {/* Right Sidebar Content */}
+          <div className="space-y-4 md:space-y-6">
             {/* Upcoming Lessons */}
             <Card>
               <CardHeader>
@@ -384,13 +393,13 @@ export default function DashboardPage() {
                     <span className="text-foreground">
                       {t("goal.practiceSpeaking")}
                     </span>
-                    <span className="text-blue-600 dark:text-blue-400 font-medium">
+                    <span className="text-primary font-medium">
                       2/3
                     </span>
                   </div>
                   <Progress
                     value={67}
-                    className="h-2 bg-blue-100 dark:bg-blue-950"
+                    className="h-2"
                   />
                 </div>
                 <div className="space-y-2">
