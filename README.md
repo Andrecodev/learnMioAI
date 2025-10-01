@@ -1,4 +1,4 @@
-# LearnMioAI - Comprehensive English Learning Platform
+# LearnAI - Plataforma Integral de Aprendizaje de Inglés
 
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/andrecodevs-projects/v0-comprehensive-english-platform)
 [![Built with Next.js](https://img.shields.io/badge/Built%20with-Next.js-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
@@ -86,28 +86,39 @@ Una plataforma integral de aprendizaje de inglés impulsada por IA, diseñada pa
 ### Estructura del Proyecto
 
 ```
-learnMioAI/
-├── app/                    # Páginas y layouts (App Router)
-│   ├── analytics/         # Página de análisis
-│   ├── api/               # APIs del backend
-│   │   ├── ai/           # Endpoints de IA
-│   │   └── lessons/      # Endpoints de lecciones
-│   ├── dashboard/        # Dashboard principal
-│   ├── lessons/          # Páginas de lecciones
-│   └── tutoring/         # Página de tutoría
-├── components/            # Componentes reutilizables
-│   ├── ui/               # Componentes de UI (shadcn/ui)
-│   └── ...               # Otros componentes
-├── contexts/              # Contextos de React
+learnAI/
+├── src/                    # Código fuente principal
+│   ├── app/               # Páginas y layouts (App Router)
+│   │   ├── analytics/    # Página de análisis
+│   │   ├── api/          # APIs del backend
+│   │   │   ├── ai/      # Endpoints de IA
+│   │   │   ├── lessons/ # Endpoints de lecciones
+│   │   │   └── profile/ # Endpoints de perfil
+│   │   ├── dashboard/    # Dashboard principal
+│   │   ├── lessons/      # Páginas de lecciones
+│   │   ├── login/        # Página de inicio de sesión
+│   │   ├── profile/      # Página de perfil
+│   │   └── tutoring/     # Página de tutoría
+│   ├── components/       # Componentes reutilizables
+│   │   ├── forms/       # Formularios
+│   │   ├── ui/          # Componentes de UI
+│   │   └── ...          # Otros componentes
+│   ├── contexts/         # Contextos de React
+│   ├── hooks/            # Hooks personalizados
+│   ├── i18n/             # Configuración de internacionalización
+│   ├── lib/              # Utilidades y configuraciones
+│   ├── messages/         # Archivos de traducción
+│   ├── stores/           # Estado global (Zustand)
+│   ├── styles/           # Estilos globales
+│   └── types/            # Definiciones de tipos
 ├── docs/                  # Documentación
-├── hooks/                 # Hooks personalizados
-├── i18n/                  # Configuración de internacionalización
-├── lib/                   # Utilidades y configuraciones
-├── messages/              # Archivos de traducción
+├── env/                   # Archivos de entorno
 ├── public/                # Archivos estáticos
+│   ├── android/          # Recursos para Android
+│   ├── ios/              # Recursos para iOS
+│   └── web/              # Recursos para la web
 ├── scripts/               # Scripts de base de datos
-├── stores/                # Estado global (Zustand)
-└── styles/                # Estilos globales
+└── tests/                 # Pruebas automatizadas
 ```
 
 ## 🌐 Internacionalización
@@ -140,9 +151,11 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 ## 📞 Contacto
 
-- **Autor**: Andrecodev
+- **CoAutor**: Andrecodev
 - **GitHub**: [https://github.com/Andrecodev](https://github.com/Andrecodev)
-- **Proyecto**: [https://github.com/Andrecodev/learnMioAI](https://github.com/Andrecodev/learnMioAI)
+
+- **CoAutor**: Juan Naveros
+- **GitHub**: [https://github.com/jnaveros40](https://github.com/jnaveros40)
 
 ---
 
