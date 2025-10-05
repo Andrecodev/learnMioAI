@@ -30,7 +30,8 @@ const initialFormData: ProfileFormData = {
   frequency: 'weekly',
   mainGoal: '',
   weeklyTime: '',
-  sessionPreference: 'mixed'
+  sessionPreference: 'mixed',
+  availability: []
 };
 
 // Profile form store
