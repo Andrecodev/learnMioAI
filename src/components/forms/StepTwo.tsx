@@ -333,7 +333,7 @@ export default function StepTwo({ formData, setFormData, onNext, onPrev }: StepT
               <label key={topic} className="flex items-start space-x-2 sm:space-x-3 cursor-pointer hover:bg-white p-2 sm:p-3 rounded transition-colors min-w-0">
                 <input
                   type="checkbox"
-                  checked={formData.topicsOfInterest?.includes(topic)}
+                  checked={Boolean(formData.topicsOfInterest?.includes(topic))}
                   onChange={() => handleTopicChange(topic)}
                   className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500 mt-0.5 flex-shrink-0"
                 />

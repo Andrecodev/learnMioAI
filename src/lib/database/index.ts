@@ -16,8 +16,8 @@ export class DatabaseFactory {
   private static createProvider(): DatabaseProvider {
     const config: DatabaseConfig = {
       provider: (process.env.DATABASE_PROVIDER as any) || 'supabase',
-      url: process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      key: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      url: process.env.SUPABASE_URL!,
+      key: process.env.SUPABASE_ANON_KEY,
     //   options: {
     //     auth: {
     //       persistSession: false,

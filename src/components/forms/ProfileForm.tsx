@@ -1,41 +1,50 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/auth-context';
 import { ProfileFormData } from '@/types/forms';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepThree from './StepThree';
-import { useProfileFormStore } from '@/stores/ui-store';
-import { useBatchProfileSave } from '@/hooks/use-api';
 
 export default function ProfileForm() {
-  // Zustand store for form state management
-  const {
-    formData,
-    currentStep,
-    isSubmitting,
-    error,
-    setFormData,
-    setCurrentStep,
-    setIsSubmitting,
-    setError,
-    nextStep,
-    prevStep,
-    resetForm
-  } = useProfileFormStore();
-
-  // TanStack Query mutation for external API
-  const batchSaveMutation = useBatchProfileSave();
+  // Local React state instead of Zustand
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState<ProfileFormData>({
+    nombre: '',
+    quizResponses: [],
+    hobbies: [],
+    frequency: 'weekly',
+    mainGoal: '',
+    weeklyTime: '',
+    sessionPreference: 'mixed',
+    availability: [],
+    topicsOfInterest: []
+  });
   
   const { setProfileCompleted, user } = useAuth();
   const router = useRouter();
 
-  // Reset form when component mounts
-  useEffect(() => {
-    resetForm();
-  }, [resetForm]);
+  // Helper functions
+  const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, 3));
+  const prevStep = () => setCurrentStep(prev => Math.max(prev - 1, 1));
+  
+  const saveStep = async (step: number, stepData: Partial<ProfileFormData>) => {
+    if (!user?.uid) return;
+    
+    try {
+      await fetch('/api/profile/step', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: "65798b5d-871e-4204-89c9-c0b4498a845b", step, stepData }),
+      });
+    } catch (error) {
+      console.error('Failed to save step:', error);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,23 +52,26 @@ export default function ProfileForm() {
     setError(null);
     
     try {
-      // Use external API through TanStack Query
-      if (user?.uid) {
-        await batchSaveMutation.mutateAsync({
-          profileData: formData,
-          userId: user.uid
-        });
-      } else {
-        // Fallback to local API if no external service
-        const response = await fetch('/api/profile/save', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData),
-        });
+      if (!user?.uid) {
+        throw new Error('Please log in to save your profile');
+      }
 
-        if (!response.ok) {
-          throw new Error('Failed to save profile');
-        }
+      // Save complete profile to Supabase
+      const response = await fetch('/api/profile/complete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          userId: "65798b5d-871e-4204-89c9-c0b4498a845b", 
+          formData: {
+            ...formData,
+            email: user.email // Add user email from Firebase
+          }
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to save profile');
       }
 
       setProfileCompleted(true);
@@ -148,8 +160,8 @@ export default function ProfileForm() {
         </div>
       )}
 
-      {/* Loading State for TanStack Query */}
-      {batchSaveMutation.isPending && (
+      {/* Loading State */}
+      {isSubmitting && (
         <div className="mb-6 p-4 bg-blue-50 border border-blue-200 text-blue-800 rounded-lg animate-in slide-in-from-top-2 fade-in duration-300">
           <div className="flex items-center space-x-3">
             <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-600 border-t-transparent"></div>
@@ -170,7 +182,10 @@ export default function ProfileForm() {
                 <StepOne
                   formData={formData}
                   setFormData={setFormData}
-                  onNext={nextStep}
+                  onNext={() => {
+                    saveStep(1, formData);
+                    nextStep();
+                  }}
                 />
               </div>
             )}
@@ -179,7 +194,10 @@ export default function ProfileForm() {
                 <StepTwo
                   formData={formData}
                   setFormData={setFormData}
-                  onNext={nextStep}
+                  onNext={() => {
+                    saveStep(2, formData);
+                    nextStep();
+                  }}
                   onPrev={prevStep}
                 />
               </div>
