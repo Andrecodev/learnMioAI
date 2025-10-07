@@ -28,10 +28,47 @@ CREATE TABLE user_profiles (
     avatar_url TEXT,
     bio TEXT,
     interests TEXT[],
-    learning_style VARCHAR(20) CHECK (learning_style IN ('visual', 'auditory', 'kinesthetic', 'mixed')),
+    learning_style VARCHAR(50) CHECK (learning_style IN ('visual', 'auditory', 'kinesthetic', 'mixed', 'Visual', 'Auditivo', 'Kinestésico', 'Lectura/Escritura', 'Mixto')),
     preferred_study_time VARCHAR(20),
     daily_goal_minutes INTEGER DEFAULT 30,
     weekly_goal_lessons INTEGER DEFAULT 5,
+    
+    -- ProfileForm Step 1: Learning style and goals
+    nombre VARCHAR(255),
+    edad INTEGER,
+    quiz_responses INTEGER[],
+    main_goal TEXT,
+    weekly_time VARCHAR(10) CHECK (weekly_time IN ('<1', '1-3', '3-6', '6+')),
+    deadline DATE,
+    follow_up VARCHAR(20) CHECK (follow_up IN ('ia', 'teacher', 'mentor')),
+    
+    -- ProfileForm Step 2: Hobbies and interests  
+    hobbies TEXT[],
+    other_hobby TEXT,
+    frequency VARCHAR(20) CHECK (frequency IN ('daily', 'weekly', 'occasional')),
+    topics_of_interest TEXT[],
+    
+    -- ProfileForm Step 3: Logistics and preferences
+    availability JSONB, -- Store AvailabilitySlot array
+    session_preference VARCHAR(20) CHECK (session_preference IN ('short', 'long', 'mixed')),
+    assessment_frequency VARCHAR(20) CHECK (assessment_frequency IN ('none', 'biweekly', 'monthly')),
+    oral_test BOOLEAN DEFAULT false,
+    device VARCHAR(20) CHECK (device IN ('mobile', 'desktop', 'mobile-limited')),
+    
+    -- Consent and additional info
+    additional_comments TEXT,
+    consent_personalization BOOLEAN DEFAULT false,
+    
+    -- Form completion tracking
+    form_completed BOOLEAN DEFAULT false,
+    form_step_completed INTEGER DEFAULT 0 CHECK (form_step_completed BETWEEN 0 AND 3),
+    
+    -- Complete form data backup and step-specific storage
+    form_data JSONB, -- Store complete ProfileFormData as backup
+    step_one_data JSONB, -- Step 1: Learning style quiz and goals
+    step_two_data JSONB, -- Step 2: Hobbies and interests
+    step_three_data JSONB, -- Step 3: Availability and logistics
+    
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -222,6 +259,14 @@ CREATE TABLE notifications (
 -- Indexes for performance
 CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_users_subscription ON users(subscription_type, subscription_expires_at);
+-- Add unique constraint on user_id for user_profiles
+ALTER TABLE user_profiles ADD CONSTRAINT unique_user_profiles_user_id UNIQUE (user_id);
+
+CREATE INDEX idx_user_profiles_user_id ON user_profiles(user_id);
+CREATE INDEX idx_user_profiles_form_completion ON user_profiles(form_completed, form_step_completed);
+CREATE INDEX idx_user_profiles_learning_style ON user_profiles(learning_style);
+CREATE INDEX idx_user_profiles_main_goal ON user_profiles(main_goal);
+
 CREATE INDEX idx_user_lesson_progress_user ON user_lesson_progress(user_id);
 CREATE INDEX idx_user_lesson_progress_lesson ON user_lesson_progress(lesson_id);
 CREATE INDEX idx_ai_conversations_user ON ai_conversations(user_id);
@@ -234,6 +279,11 @@ CREATE INDEX idx_user_vocabulary_next_review ON user_vocabulary(next_review);
 CREATE INDEX idx_learning_sessions_user ON learning_sessions(user_id);
 CREATE INDEX idx_learning_sessions_created ON learning_sessions(created_at);
 CREATE INDEX idx_notifications_user_unread ON notifications(user_id, is_read);
+
+-- GIN indexes for JSONB fields in user_profiles
+CREATE INDEX idx_user_profiles_form_data_gin ON user_profiles USING gin(form_data);
+CREATE INDEX idx_user_profiles_availability_gin ON user_profiles USING gin(availability);
+CREATE INDEX idx_user_profiles_step_data_gin ON user_profiles USING gin(step_one_data, step_two_data, step_three_data);
 
 -- Functions for updating timestamps
 CREATE OR REPLACE FUNCTION update_updated_at_column()
